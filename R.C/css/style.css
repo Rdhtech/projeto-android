@@ -40,19 +40,61 @@ nav {
     flex-wrap: wrap;
 }
 
+.menu-toggle {
+    display: none;
+    gap: 5px;
+    width: 44px;
+    padding: 11px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.menu-toggle:hover {
+    border-color: #ff4d88;
+    background: rgba(255, 77, 136, 0.12);
+}
+
+.menu-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 2px;
+    background: white;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.menu-toggle.ativo span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.menu-toggle.ativo span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.ativo span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
 nav button {
+    padding: 0;
+    border-radius: 0;
     background: none;
     border: none;
     color: white;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 18px;
+    text-align: center;
     cursor: pointer;
     transition: 0.3s;
 }
 
 nav button:hover {
     color: #ff4d88;
+    background: none;
     transform: scale(1.1);
 }
 
@@ -448,14 +490,56 @@ footer {
 
     header {
         width: 95%;
+        display: flex;
+        justify-content: flex-end;
+        padding: 12px 16px;
+    }
+
+    .menu-toggle {
+        display: grid;
     }
 
     nav {
-        gap: 12px;
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0;
+        display: grid;
+        min-width: min(250px, 100vw - 30px);
+        padding: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 14px;
+        background: rgba(20, 20, 20, 0.96);
+        box-shadow: 0 16px 35px rgba(0, 0, 0, 0.28);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px);
+        pointer-events: none;
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+    }
+
+    nav.menu-aberto {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
     }
 
     nav button {
-        font-size: 14px;
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 8px;
+        font-size: 15px;
+        text-align: left;
+    }
+
+    nav button:hover {
+        color: white;
+        background: rgba(255, 77, 136, 0.16);
+        transform: translateX(4px);
+    }
+
+    nav button::after {
+        display: none;
     }
 
     .inicio h1 {

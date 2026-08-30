@@ -14,7 +14,45 @@ function mostrarPagina(id) {
 
     if (pagina) {
         pagina.classList.add("ativa");
+        window.scrollTo(0, 0);
     }
+
+    fecharMenu();
+}
+
+
+/* =========================================
+   MENU
+========================================= */
+
+const menuToggle = document.getElementById("menuToggle");
+const siteNav = document.getElementById("siteNav");
+
+function fecharMenu() {
+
+    if (!menuToggle || !siteNav) return;
+
+    menuToggle.classList.remove("ativo");
+    siteNav.classList.remove("menu-aberto");
+    menuToggle.setAttribute("aria-expanded", "false");
+}
+
+if (menuToggle && siteNav) {
+
+    menuToggle.addEventListener("click", () => {
+
+        const estaAberto = siteNav.classList.toggle("menu-aberto");
+
+        menuToggle.classList.toggle("ativo", estaAberto);
+        menuToggle.setAttribute("aria-expanded", String(estaAberto));
+    });
+
+    document.addEventListener("click", event => {
+
+        if (!event.target.closest("header")) {
+            fecharMenu();
+        }
+    });
 }
 
 

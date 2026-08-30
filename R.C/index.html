@@ -16,13 +16,25 @@
 
   <header>
 
-    <nav>
-      <button onclick="mostrarPagina('home')">Início</button>
-      <button onclick="mostrarPagina('fotos')">Fotos</button>
-      <button onclick="mostrarPagina('antesdepois')">Antes e Depois</button>
-      <button onclick="mostrarPagina('musicas')">Músicas</button>
-      <button onclick="mostrarPagina('conversa')"> 1° Conversa</button>
-      <button onclick="mostrarPagina('quemsomos')">Quem Somos</button>
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      type="button"
+      aria-label="Abrir menu"
+      aria-expanded="false"
+      aria-controls="siteNav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="site-nav" id="siteNav">
+      <button class="nav-link" onclick="mostrarPagina('home')">Início</button>
+      <button class="nav-link" onclick="mostrarPagina('fotos')">Fotos</button>
+      <button class="nav-link" onclick="mostrarPagina('antesdepois')">Antes e Depois</button>
+      <button class="nav-link" onclick="mostrarPagina('musicas')">Músicas</button>
+      <button class="nav-link" onclick="mostrarPagina('conversa')">1° Conversa</button>
+      <button class="nav-link" onclick="mostrarPagina('quemsomos')">Quem Somos</button>
     </nav>
 
   </header>
