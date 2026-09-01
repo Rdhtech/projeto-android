@@ -1,425 +1,790 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Raphael & Camilly ❤️</title>
+    <meta name="description"
+        content="Raphael & Camilly ❤️ Nosso cantinho, nossas memórias, músicas e sonhos.">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+    <title>Raphael & Camilly ❤️</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-  <header>
+    <!-- =========================================
+         HEADER / NAVEGAÇÃO
+    ========================================== -->
 
-    <button
-      class="menu-toggle"
-      id="menuToggle"
-      type="button"
-      aria-label="Abrir menu"
-      aria-expanded="false"
-      aria-controls="siteNav">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+    <header>
 
-    <nav class="site-nav" id="siteNav">
-      <button class="nav-link" onclick="mostrarPagina('home')">Início</button>
-      <button class="nav-link" onclick="mostrarPagina('fotos')">Fotos</button>
-      <button class="nav-link" onclick="mostrarPagina('antesdepois')">Antes e Depois</button>
-      <button class="nav-link" onclick="mostrarPagina('musicas')">Músicas</button>
-      <button class="nav-link" onclick="mostrarPagina('conversa')">1° Conversa</button>
-      <button class="nav-link" onclick="mostrarPagina('quemsomos')">Quem Somos</button>
-    </nav>
+        <!-- MENU DESKTOP -->
 
-  </header>
+        <nav class="menu-desktop">
+            <button onclick="mostrarPagina('home')">Início</button>
+            <button onclick="mostrarPagina('fotos')">Fotos</button>
+            <button onclick="mostrarPagina('antesdepois')">Antes e Depois</button>
+            <button onclick="mostrarPagina('musicas')">Músicas</button>
+            <button onclick="mostrarPagina('conversa')">1° Conversa</button>
+            <button onclick="mostrarPagina('quemsomos')">Quem Somos</button>
+            <button onclick="mostrarPagina('casa')">Nossa Casa 🏡</button>
+        </nav>
 
-  <!-- PÁGINA INICIAL -->
+        <!-- BOTÃO MOBILE -->
 
-  <section class="pagina ativa inicio" id="home">
+        <button class="menu-mobile-btn" id="menuMobileBtn" aria-label="Abrir menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
 
-    <h1>Raphael & Camilly ❤️</h1>
+    </header>
 
-    <p>
-      Esse site é nosso cantinho especial.
-      Um lugar onde guardamos nossas memórias,
-      sentimentos, músicas e momentos inesquecíveis.
-      Cada detalhe aqui representa um pedaço da nossa história.
-    </p>
 
-    <div class="contador">
+    <!-- =========================================
+         MENU MOBILE
+    ========================================== -->
 
-      <h2>Estamos juntos há:</h2>
+    <div class="menu-mobile-overlay" id="menuMobileOverlay"></div>
 
-      <h3 id="tempo"></h3>
+    <aside class="menu-mobile" id="menuMobile">
 
-    </div>
+        <div class="menu-mobile-topo">
 
-    <div class="botao-amor">
-    <button onclick="euTeAmo()">Eu te amoo ❤️</button>
-</div>
-
-<div id="mensagem-amor"></div>
-
-
-
-  </section>
-
-  
-
-  <!-- PÁGINA DE FOTOS -->
-
- <!-- PÁGINA DE FOTOS -->
-
- <!-- PÁGINA DE FOTOS -->
-<section class="pagina" id="fotos">
-
-  <h2 class="titulo">Nossas Memórias 📸</h2>
-
-  <div class="galeria">
-
-    <div class="foto">
-      <img src="image/foto1.jpg">
-      <p>
-        Cada sorriso seu virou meu lugar favorito ❤️
-      </p>
-    </div>
-
-    <div class="foto">
-      <img src="image/foto2.jpg">
-      <p>
-        Entre milhões de pessoas, meu coração escolheu você ✨
-      </p>
-    </div>
-
-    <div class="foto">
-      <img src="image/foto3.jpg">
-      <p>
-        Nosso amor transformando momentos simples em eternos 🌙
-      </p>
-    </div>
-
-    <div class="foto">
-      <img src="image/foto4.jpg">
-      <p>
-        Até o pôr do sol fica mais bonito quando lembro de você 🌅
-      </p>
-    </div>
-
-    <div class="foto">
-       <img src="image/foto5.jpg" class="horizontal">
-      <p>Você trouxe paz pro meu caos e amor pros meus dias ❤️
-      </p>
-    </div>
-
-    <div class="foto">
-      <img src="image/foto6.jpg" class="horizontal">
-      <p>Em cada olhar seu eu encontro um motivo pra sorrir ✨
-    </p>
-    </div>
-
-    <div class="foto">
-      <img src="image/foto7.jpg">
-      <p>
-        Algumas memórias passam… você ficou no meu coração 🌙
-      </p>
-    </div>
-
-    <div class="foto">
-      <img src="image/foto8.jpg">
-      <p>
-        Nosso amor merece ser lembrado em cada detalhe ❤️
-      </p>
-    </div>
-
-    <div class="foto">
-      <img src="image/foto9.jpg">
-      <p>
-        Uma foto no espelho registra um momento. Você registra os melhores momentos da minha vida. ❤️
-      </p>
-    </div>
-
-    <div class="foto">
-      <img src="image/foto10.jpg">
-      <p>
-        Nós dois no mesmo reflexo, compartilhando a mesma felicidade. ❤️
-      </p>
-    </div>
-
-     <div class="foto">
-      <img src="image/foto11.jpeg">
-      <p>
-        O reflexo mostra duas pessoas, mas o amor nos faz ser um só. ❤️
-      </p>
-    </div>
-
-    <div class="foto">
-      <img src="image/foto12.jpeg">
-      <p>
-        Mais que um buquê e duas alianças… são símbolos de tudo que estamos construindo juntos. Amo você ❤️
-      </p>
-    </div>
-
-    <div class="foto">
-      <img src="image/foto13.jpeg">
-      <p>
-        Ela com o buque 💐
-      </p>
-    </div>
-
-    <div class="foto">
-      <img src="image/foto14.jpeg">
-      <p>
-        Eu com o buque 💐
-      </p>
-    </div>
-
-    <div class="foto">
-      <img src="image/foto15.jpeg">
-      <p>
-        Torcendo pelo Brasil juntos ⚽
-      </p>
-    </div>
-
-    <div class="foto">
-      <img src="image/foto16.jpg">
-      <p>
-        Se for pra colecionar momentos, que sejam sempre ao seu lado. ❤️
-      </p>
-    </div>
-
-    <div class="foto">
-      <img src="image/foto17.jpeg">
-      <p>
-        Selfie com meu amor❤️
-      </p>
-    </div>
-
-  </div>
-
-</section>
-
-
-  <!-- PÁGINA DE MÚSICAS -->
-
-  <section class="pagina" id="musicas">
-
-  <h2 class="titulo">Nossas Músicas 🎵</h2>
-
-  <div class="musicas">
-
-    <div class="musica">
-
-      <h3>Na Linha do Tempo ❤️</h3>
-
-      <p>
-        Você apareceu na minha vida como algo que o destino já tinha escrito.
-        Desde então, cada momento ao seu lado virou memória,
-        carinho e amor guardado na nossa própria linha do tempo. ✨
-      </p>
-
-      <audio controls>
-        <source src="music/musica1.mp3" type="audio/mpeg">
-      </audio>
-
-    </div>
-
-    <div class="musica">
-
-      <h3>Nossa Música Especial 🌙</h3>
-
-      <p>
-        Algumas músicas simplesmente têm nossa alma dentro delas.
-        E quando ela toca, parece que o mundo desacelera
-        só pra me lembrar o quanto eu amo você. ❤️
-      </p>
-
-      <audio controls>
-        <source src="music/musica2.mp3" type="audio/mpeg">
-      </audio>
-
-    </div>
-
-  </div>
-
-</section>
-
-<section class="pagina" id="antesdepois">
-
-    <h2 class="titulo">Nossa História ❤️</h2>
-
-    <div class="antes-depois">
-
-        <div class="lado">
-            <img src="image/antes_raphael.jpeg" alt="Raphael antes">
-            <h3>Raphael antes ❤️</h3>
-            <p>Pequeno Raphael</p>
-        </div>
-
-        <div class="lado">
-            <img src="image/antes_camilly.jpeg" alt="Camilly antes">
-            <h3>Camilly antes ❤️</h3>
-            <p>Pequena Camilly </p>
-        </div>
-
-        <div class="lado">
-            <img src="image/depois_raphael.jpeg" alt="Raphael atualmente">
-            <h3>Raphael❤️</h3>
-            <p>Raphael nos dias atuais, com 18 anos</p>
-        </div>
-
-        <div class="lado">
-            <img src="image/depois_camilly.jpeg" alt= "Camilly atualmente">
-            <h3>Camilly❤️</h3>
-            <p>Camilly nos dias atuais, com 19 anos</p>
-        </div>
-
-    </div>
-
-</section>
-
-<section class="pagina" id="quemsomos">
-
-  <h2 class="titulo">💑 Quem Somos</h2>
-
-  <div class="galeria">
-
-    <div class="musica">
-
-      <h3>💖 Camilly</h3>
-
-      <p><strong>Nome completo:</strong> Camilly Victoria Oliveira da Silva</p>
-
-<p><strong>Apelido:</strong> Camiis, Camilona, Milly, Mila, Camillynha</p>
-
-<p><strong>Data de nascimento:</strong> 12/06/2007</p>
-
-<p><strong>Comida favorita:</strong> Macarrão de todos os tipos. Sendo macarrão, é dentro! 🍝</p>
-
-<p><strong>Música favorita:</strong> Hard 2 Face Reality, Baby Love, Cama de Casal, Na Linha do Tempo, Drowning, I Want It That Way, I Knew I Loved You 🎵</p>
-
-<p><strong>Cantores favoritos:</strong> Hungria, Justin Bieber, Zé Neto & Cristiano, Luan Santana e Backstreet Boys 🎤</p>
-
-<p><strong>Cor favorita:</strong> Preto 🖤</p>
-
-<p><strong>Habilidade especial:</strong> Cozinhar, maquiar, dormir e aprender tudo muito rápido ✨</p>
-
-<p><strong>Viagem do exterior:</strong> coreia do sul, frança, eua, canadá</p>
-
-<p><strong>Superpoder:</strong> Ser invisível, voar e ler mentes. Se pudesse, teria todos os poderes do mundo! 🦸‍♀️</p>
-
-<p><strong>Filme favorito:</strong> Barbie 🎬🎀</p>
-
-<p><strong>Frase mais usada:</strong> "Vc me ama?" </p>
-
-<p><strong>Emoji oficial:</strong> 😭❤️😜🤭😚</p>
-
-<p><strong>Animal favorito:</strong> Macaco e cachorro 🐵🐶</p>
-
-<p><strong>Curiosidade:</strong> Todas, porque sou curiosa sobre tudo! 🤭</p>
-
-    </div>
-  
-    
-
-    <div class="musica">
-
-      <h3>😎 Raphael</h3>
-
-      <p><strong>Nome completo:</strong> Raphael Del Homi Lima Souza</p>
-
-<p><strong>Apelido:</strong> Rzinn, Del Homi, Padre ou 23 </p>
-
-<p><strong>Data de nascimento:</strong> 18/08/2008 🎂</p>
-
-<p><strong>Comida favorita:</strong> Kit Kat 🍫</p>
-
-<p><strong>Música favorita:</strong> Temporal 🎵</p>
-
-<p><strong>Cantor favorito:</strong> Hungria Hip Hop 🎤</p>
-
-<p><strong>Cor favorita:</strong> Preto 🖤</p>
-
-<p><strong>Habilidade especial:</strong> Ser mestre em TI 💻</p>
-
-<p><strong>Viagem do exterior dos sonhos:</strong> Itália ✈️</p>
-
-<p><strong>Superpoder:</strong> Teletransportar e ter supervelocidade ⚡🌎</p>
-
-<p><strong>Filme favorito:</strong> Como Treinar o Seu Dragão 🐉🎬</p>
-
-<p><strong>Frase mais usada:</strong> "Eu te amoo" ❤️</p>
-
-<p><strong>Emoji oficial:</strong> ❤️</p>
-
-<p><strong>Animal favorito:</strong> Cachorro 🐶</p>
-
-<p><strong>Curiosidade:</strong> Sou fã número 1 da minha namorada ❤️, torcedor da Ferrari 🏎️ e do Palmeiras ⚽, meu ídolo é Ayrton Senna 🏁. Ah, e eu já falei que amo minha namorada? 🤭❤️</p>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- PÁGINA DA CONVERSA -->
-
-<section class="pagina" id="conversa">
-
-    <h2 class="titulo">Nossa Conversa 💬 ❤️</h2>
-
-    <div class="conversa-container">
-
-        <div class="conversa-topo">
-
-            <span class="conversa-voltar">‹</span>
-
-            <img
-                src="image/depois_camilly.jpeg"
-                alt="Camilly"
-                class="conversa-foto"
-            >
-
-            <div class="conversa-nome">
-                <strong>c'amiis</strong>
-                <span>🔥 12</span>
+            <div>
+                <span>RAPHAEL & CAMILLY</span>
+                <small>Nosso cantinho ❤️</small>
             </div>
 
-            <span class="conversa-pesquisa">⌕</span>
-            <span class="conversa-menu">•••</span>
-
-        </div>
-
-
-        <div class="conversa-chat" id="conversaChat">
-        </div>
-
-
-        <div class="conversa-controles">
-
-            <button id="proximaConversa">
-                Próxima mensagem ❤️
-            </button>
-
-            <button id="reiniciarConversa">
-                ↻
+            <button id="fecharMenuMobile" aria-label="Fechar menu">
+                ×
             </button>
 
         </div>
 
-    </div>
+        <nav>
 
-</section>
+            <button onclick="mostrarPagina('home')">
+                <span>⌂</span>
+                Início
+            </button>
 
-  <footer>
-    Feito com amor por Raphael para Camilly ❤️
-  </footer>
-// CONTADOR
-  <script src="javascript/script.js"></script>
+            <button onclick="mostrarPagina('fotos')">
+                <span>♡</span>
+                Fotos
+            </button>
+
+            <button onclick="mostrarPagina('antesdepois')">
+                <span>∞</span>
+                Antes e Depois
+            </button>
+
+            <button onclick="mostrarPagina('musicas')">
+                <span>♫</span>
+                Músicas
+            </button>
+
+            <button onclick="mostrarPagina('conversa')">
+                <span>♡</span>
+                1° Conversa
+            </button>
+
+            <button onclick="mostrarPagina('quemsomos')">
+                <span>♧</span>
+                Quem Somos
+            </button>
+
+            <button onclick="mostrarPagina('casa')">
+                <span>⌂</span>
+                Nossa Casa 🏡
+            </button>
+
+        </nav>
+
+        <div class="menu-mobile-footer">
+            Feito com amor ❤️
+        </div>
+
+    </aside>
+
+
+    <!-- =========================================
+         INÍCIO
+    ========================================== -->
+
+    <section class="pagina ativa inicio" id="home">
+
+        <h1>Raphael & Camilly ❤️</h1>
+
+        <p>
+            Esse site é nosso cantinho especial.
+            Um lugar onde guardamos nossas memórias,
+            sentimentos, músicas e momentos inesquecíveis.
+            Cada detalhe aqui representa um pedaço da nossa história.
+        </p>
+
+        <div class="contador">
+
+            <h2>Estamos juntos há:</h2>
+
+            <h3 id="tempo"></h3>
+
+        </div>
+
+        <div class="botao-amor">
+
+            <button onclick="euTeAmo()">
+                Eu te amoo ❤️
+            </button>
+
+        </div>
+
+        <div id="mensagem-amor"></div>
+
+    </section>
+
+
+    <!-- =========================================
+         FOTOS
+    ========================================== -->
+
+    <section class="pagina" id="fotos">
+
+        <h2 class="titulo">Nossas Memórias 📸</h2>
+
+        <div class="galeria">
+
+            <div class="foto">
+                <img src="image/foto1.jpg" alt="Raphael e Camilly">
+                <p>Cada sorriso seu virou meu lugar favorito ❤️</p>
+            </div>
+
+            <div class="foto">
+                <img src="image/foto2.jpg" alt="Raphael e Camilly">
+                <p>Entre milhões de pessoas, meu coração escolheu você ✨</p>
+            </div>
+
+            <div class="foto">
+                <img src="image/foto3.jpg" alt="Raphael e Camilly">
+                <p>Nosso amor transformando momentos simples em eternos 🌙</p>
+            </div>
+
+            <div class="foto">
+                <img src="image/foto4.jpg" alt="Raphael e Camilly">
+                <p>Até o pôr do sol fica mais bonito quando lembro de você 🌅</p>
+            </div>
+
+            <div class="foto">
+                <img src="image/foto5.jpg" alt="Raphael e Camilly">
+                <p>Você trouxe paz pro meu caos e amor pros meus dias ❤️</p>
+            </div>
+
+            <div class="foto">
+                <img src="image/foto6.jpg" alt="Raphael e Camilly">
+                <p>Em cada olhar seu eu encontro um motivo pra sorrir ✨</p>
+            </div>
+
+            <div class="foto">
+                <img src="image/foto7.jpg" alt="Raphael e Camilly">
+                <p>Algumas memórias passam… você ficou no meu coração 🌙</p>
+            </div>
+
+            <div class="foto">
+                <img src="image/foto8.jpg" alt="Raphael e Camilly">
+                <p>Nosso amor merece ser lembrado em cada detalhe ❤️</p>
+            </div>
+
+            <div class="foto">
+                <img src="image/foto9.jpg" alt="Raphael e Camilly">
+                <p>Uma foto no espelho registra um momento. Você registra os melhores momentos da minha vida. ❤️</p>
+            </div>
+
+            <div class="foto">
+                <img src="image/foto10.jpg" alt="Raphael e Camilly">
+                <p>Nós dois no mesmo reflexo, compartilhando a mesma felicidade. ❤️</p>
+            </div>
+
+            <div class="foto">
+                <img src="image/foto11.jpeg" alt="Raphael e Camilly">
+                <p>O reflexo mostra duas pessoas, mas o amor nos faz ser um só. ❤️</p>
+            </div>
+
+            <div class="foto">
+                <img src="image/foto12.jpeg" alt="Buquê e alianças">
+                <p>Mais que um buquê e duas alianças… são símbolos de tudo que estamos construindo juntos. Amo você ❤️</p>
+            </div>
+
+            <div class="foto">
+                <img src="image/foto13.jpeg" alt="Camilly com buquê">
+                <p>Ela com o buquê 💐</p>
+            </div>
+
+            <div class="foto">
+                <img src="image/foto14.jpeg" alt="Raphael com buquê">
+                <p>Eu com o buquê 💐</p>
+            </div>
+
+            <div class="foto">
+                <img src="image/foto15.jpeg" alt="Raphael e Camilly torcendo pelo Brasil">
+                <p>Torcendo pelo Brasil juntos ⚽</p>
+            </div>
+
+            <div class="foto">
+                <img src="image/foto16.jpg" alt="Raphael e Camilly">
+                <p>Se for pra colecionar momentos, que sejam sempre ao seu lado. ❤️</p>
+            </div>
+
+            <div class="foto">
+                <img src="image/foto17.jpeg" alt="Selfie de Raphael e Camilly">
+                <p>Selfie com meu amor ❤️</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         MÚSICAS
+    ========================================== -->
+
+    <section class="pagina" id="musicas">
+
+        <h2 class="titulo">Nossas Músicas 🎵</h2>
+
+        <div class="musicas">
+
+            <div class="musica">
+
+                <h3>Na Linha do Tempo ❤️</h3>
+
+                <p>
+                    Você apareceu na minha vida como algo que o destino já tinha escrito.
+                    Desde então, cada momento ao seu lado virou memória,
+                    carinho e amor guardado na nossa própria linha do tempo. ✨
+                </p>
+
+                <audio controls>
+                    <source src="music/musica1.mp3" type="audio/mpeg">
+                    Seu navegador não suporta áudio.
+                </audio>
+
+            </div>
+
+            <div class="musica">
+
+                <h3>Nossa Música Especial 🌙</h3>
+
+                <p>
+                    Algumas músicas simplesmente têm nossa alma dentro delas.
+                    E quando ela toca, parece que o mundo desacelera
+                    só pra me lembrar o quanto eu amo você. ❤️
+                </p>
+
+                <audio controls>
+                    <source src="music/musica2.mp3" type="audio/mpeg">
+                    Seu navegador não suporta áudio.
+                </audio>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         ANTES E DEPOIS
+    ========================================== -->
+
+    <section class="pagina" id="antesdepois">
+
+        <h2 class="titulo">Nossa História ❤️</h2>
+
+        <div class="antes-depois">
+
+            <div class="lado">
+                <img src="image/antes_raphael.jpeg" alt="Raphael antes">
+                <h3>Raphael antes ❤️</h3>
+                <p>Pequeno Raphael</p>
+            </div>
+
+            <div class="lado">
+                <img src="image/antes_camilly.jpeg" alt="Camilly antes">
+                <h3>Camilly antes ❤️</h3>
+                <p>Pequena Camilly</p>
+            </div>
+
+            <div class="lado">
+                <img src="image/depois_raphael.jpeg" alt="Raphael atualmente">
+                <h3>Raphael ❤️</h3>
+                <p>Raphael nos dias atuais, com 18 anos</p>
+            </div>
+
+            <div class="lado">
+                <img src="image/depois_camilly.jpeg" alt="Camilly atualmente">
+                <h3>Camilly ❤️</h3>
+                <p>Camilly nos dias atuais, com 19 anos</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         QUEM SOMOS
+    ========================================== -->
+
+    <section class="pagina" id="quemsomos">
+
+        <h2 class="titulo">💑 Quem Somos</h2>
+
+        <div class="galeria">
+
+            <div class="musica">
+
+                <h3>💖 Camilly</h3>
+
+                <p><strong>Nome completo:</strong> Camilly Victoria Oliveira da Silva</p>
+                <p><strong>Apelido:</strong> Camiis, Camilona, Milly, Mila, Camillynha</p>
+                <p><strong>Data de nascimento:</strong> 12/06/2007</p>
+                <p><strong>Comida favorita:</strong> Macarrão de todos os tipos. Sendo macarrão, é dentro! 🍝</p>
+                <p><strong>Música favorita:</strong> Hard 2 Face Reality, Baby Love, Cama de Casal, Na Linha do Tempo, Drowning, I Want It That Way, I Knew I Loved You 🎵</p>
+                <p><strong>Cantores favoritos:</strong> Hungria, Justin Bieber, Zé Neto & Cristiano, Luan Santana e Backstreet Boys 🎤</p>
+                <p><strong>Cor favorita:</strong> Preto 🖤</p>
+                <p><strong>Habilidade especial:</strong> Cozinhar, maquiar, dormir e aprender tudo muito rápido ✨</p>
+                <p><strong>Viagem do exterior:</strong> Coreia do Sul, França, EUA, Canadá</p>
+                <p><strong>Superpoder:</strong> Ser invisível, voar e ler mentes. Se pudesse, teria todos os poderes do mundo! 🦸‍♀️</p>
+                <p><strong>Filme favorito:</strong> Barbie 🎬🎀</p>
+                <p><strong>Frase mais usada:</strong> "Vc me ama?"</p>
+                <p><strong>Emoji oficial:</strong> 😭❤️😜🤭😚</p>
+                <p><strong>Animal favorito:</strong> Macaco e cachorro 🐵🐶</p>
+                <p><strong>Curiosidade:</strong> Todas, porque sou curiosa sobre tudo! 🤭</p>
+
+            </div>
+
+            <div class="musica">
+
+                <h3>😎 Raphael</h3>
+
+                <p><strong>Nome completo:</strong> Raphael Del Homi Lima Souza</p>
+                <p><strong>Apelido:</strong> Rzinn, Del Homi, Padre ou 23</p>
+                <p><strong>Data de nascimento:</strong> 18/08/2008 🎂</p>
+                <p><strong>Comida favorita:</strong> Kit Kat 🍫</p>
+                <p><strong>Música favorita:</strong> Temporal 🎵</p>
+                <p><strong>Cantor favorito:</strong> Hungria Hip Hop 🎤</p>
+                <p><strong>Cor favorita:</strong> Preto 🖤</p>
+                <p><strong>Habilidade especial:</strong> Ser mestre em TI 💻</p>
+                <p><strong>Viagem do exterior dos sonhos:</strong> Itália ✈️</p>
+                <p><strong>Superpoder:</strong> Teletransportar e ter supervelocidade ⚡🌎</p>
+                <p><strong>Filme favorito:</strong> Como Treinar o Seu Dragão 🐉🎬</p>
+                <p><strong>Frase mais usada:</strong> "Eu te amoo" ❤️</p>
+                <p><strong>Emoji oficial:</strong> ❤️</p>
+                <p><strong>Animal favorito:</strong> Cachorro 🐶</p>
+                <p><strong>Curiosidade:</strong> Sou fã número 1 da minha namorada ❤️, torcedor da Ferrari 🏎️ e do Palmeiras ⚽, meu ídolo é Ayrton Senna 🏁. Ah, e eu já falei que amo minha namorada? 🤭❤️</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         NOSSA CASA
+    ========================================== -->
+
+    <section class="pagina nossa-casa" id="casa">
+
+        <div class="casa-header">
+
+            <span class="casa-subtitulo">NOSSO FUTURO</span>
+
+            <h2>
+                Nossa <span>Casa</span>
+            </h2>
+
+            <p>
+                Um lugar para construir nossa história,
+                nossos momentos e nossa vida juntos. ❤️
+            </p>
+
+        </div>
+
+        <div class="casa-visual">
+
+            <img
+                src="image/casa-frente.jpg"
+                alt="Nossa futura casa"
+                class="casa-imagem"
+            >
+
+            <div class="casa-overlay"></div>
+
+            <div class="casa-frase">
+
+                <span>UM DIA...</span>
+
+                <h3>
+                    Esse lugar<br>
+                    vai ser <strong>nosso.</strong>
+                </h3>
+
+                <p>
+                    E cada cantinho vai ter uma história nossa.
+                </p>
+
+            </div>
+
+            <button
+                class="casa-ponto ponto-sala"
+                data-titulo="Nossa sala"
+                data-texto="Um lugar para assistir filmes, conversar, rir e passar horas juntos."
+                data-imagem="image/casa-sala.JPEG"
+                aria-label="Nossa sala"
+            >
+                <span></span>
+            </button>
+
+            <button
+                class="casa-ponto ponto-quarto"
+                data-titulo="Nosso quarto"
+                data-texto="Nosso cantinho. Onde o mundo fica lá fora e só importa nós dois."
+                data-imagem="image/casa-quarto.jpeg"
+                aria-label="Nosso quarto"
+            >
+                <span></span>
+            </button>
+
+            <button
+                class="casa-ponto ponto-piscina"
+                data-titulo="Piscina"
+                data-texto="Dias quentes, música, risadas e vários momentos que ainda vamos viver."
+                data-imagem="image/casa-piscina.JPEG"
+                aria-label="Piscina"
+            >
+                <span></span>
+            </button>
+
+            <button
+                class="casa-ponto ponto-jardim"
+                data-titulo="Nosso jardim"
+                data-texto="Um espaço tranquilo para aproveitar juntos."
+                data-imagem="image/casa-jardim.JPEG"
+                aria-label="Nosso jardim"
+            >
+                <span></span>
+            </button>
+
+            <div class="casa-card" id="casaCard">
+
+                <button
+                    class="fechar-card"
+                    id="fecharCard"
+                    aria-label="Fechar"
+                >
+                    ×
+                </button>
+
+                <span class="card-icon">♡</span>
+
+                <img
+                    class="card-imagem"
+                    id="cardImagem"
+                    src=""
+                    alt=""
+                >
+
+                <h3 id="cardTitulo">
+                    Nossa casa
+                </h3>
+
+                <p id="cardTexto">
+                    Clique nos pontos da casa para conhecer cada cantinho.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- AMBIENTES -->
+
+        <div class="ambientes-header">
+
+            <span>UM SONHO, CADA CANTINHO</span>
+
+            <h3>Imagine a nossa vida aqui</h3>
+
+            <p>
+                Clique em um ambiente para ver o que ele representa para nós.
+            </p>
+
+        </div>
+
+        <div class="ambientes-grid">
+
+            <button
+                class="ambiente"
+                data-titulo="Nossa sala"
+                data-texto="Filmes abraçadinhos, risadas e domingos sem pressa."
+                data-imagem="image/casa-sala.JPEG"
+            >
+                <img src="image/casa-sala.JPEG" alt="Nossa sala moderna">
+                <span class="ambiente-sombra"></span>
+                <span class="ambiente-icone">🛋️</span>
+
+                <span class="ambiente-texto">
+                    <strong>Nossa sala</strong>
+                    <small>Filmes e risadas</small>
+                </span>
+            </button>
+
+            <button
+                class="ambiente"
+                data-titulo="Nossa cozinha"
+                data-texto="Receitas, café da manhã juntos e a nossa bagunça favorita."
+                data-imagem="image/casa-cozinha.jpg"
+            >
+                <img src="image/casa-cozinha.jpg" alt="Nossa cozinha moderna">
+                <span class="ambiente-sombra"></span>
+                <span class="ambiente-icone">🍳</span>
+
+                <span class="ambiente-texto">
+                    <strong>Nossa cozinha</strong>
+                    <small>Receitas e carinho</small>
+                </span>
+            </button>
+
+            <button
+                class="ambiente"
+                data-titulo="Nosso quarto"
+                data-texto="O nosso refúgio: tranquilidade, conversa e nós dois."
+                data-imagem="image/casa-quarto.jpeg"
+            >
+                <img src="image/casa-quarto.jpeg" alt="Quarto aconchegante">
+                <span class="ambiente-sombra"></span>
+                <span class="ambiente-icone">🛏️</span>
+
+                <span class="ambiente-texto">
+                    <strong>Nosso quarto</strong>
+                    <small>Nosso refúgio</small>
+                </span>
+            </button>
+
+            <button
+                class="ambiente"
+                data-titulo="Área da piscina"
+                data-texto="Música, dias de sol e muitas lembranças que ainda vamos criar."
+                data-imagem="image/casa-piscina.JPEG"
+            >
+                <img src="image/casa-piscina.JPEG" alt="Piscina de casa">
+                <span class="ambiente-sombra"></span>
+                <span class="ambiente-icone">🏊</span>
+
+                <span class="ambiente-texto">
+                    <strong>Área da piscina</strong>
+                    <small>Dias de sol</small>
+                </span>
+            </button>
+
+            <button
+                class="ambiente"
+                data-titulo="Nosso jardim"
+                data-texto="Um espaço calmo para respirar, conversar e aproveitar a vida juntos."
+                data-imagem="image/casa-jardim.JPEG"
+            >
+                <img src="image/casa-jardim.JPEG" alt="Jardim residencial">
+                <span class="ambiente-sombra"></span>
+                <span class="ambiente-icone">🌿</span>
+
+                <span class="ambiente-texto">
+                    <strong>Nosso jardim</strong>
+                    <small>Paz para nós dois</small>
+                </span>
+            </button>
+
+            <button
+                class="ambiente"
+                data-titulo="Nossa academia"
+                data-texto="Um espaço para cuidar do corpo, treinar juntos e evoluir lado a lado. 💪❤️"
+                data-imagem="image/casa-academia.jpeg"
+            >
+                <img src="image/casa-academia.jpeg" alt="Nossa academia">
+                <span class="ambiente-sombra"></span>
+                <span class="ambiente-icone">🏋️</span>
+
+                <span class="ambiente-texto">
+                    <strong>Nossa academia</strong>
+                    <small>Treino e evolução</small>
+                </span>
+            </button>
+
+            <button
+                class="ambiente"
+                data-titulo="Quarto / Home Office"
+                data-texto="Um espaço versátil para descansar, estudar, trabalhar e viver nossos momentos juntos. 🛏️💻❤️"
+                data-imagem="image/casa-homeoffice.jpeg"
+            >
+                <img src="image/casa-homeoffice.jpeg" alt="Quarto e Home Office">
+                <span class="ambiente-sombra"></span>
+                <span class="ambiente-icone">🛏️💻</span>
+
+                <span class="ambiente-texto">
+                    <strong>Quarto / Home Office</strong>
+                    <small>Descanso e trabalho</small>
+                </span>
+            </button>
+
+            <button
+                class="ambiente"
+                data-titulo="Nosso banheiro"
+                data-texto="Um banheiro moderno, elegante e confortável, pensado em cada detalhe da nossa futura casa. 🚿❤️"
+                data-imagem="image/casa-banheiro.jpeg"
+            >
+                <img src="image/casa-banheiro.jpeg" alt="Nosso banheiro moderno">
+                <span class="ambiente-sombra"></span>
+                <span class="ambiente-icone">🚿</span>
+
+                <span class="ambiente-texto">
+                    <strong>Nosso banheiro</strong>
+                    <small>Conforto e estilo</small>
+                </span>
+            </button>
+
+            <button
+                class="ambiente"
+                data-titulo="Sala de Jogos"
+                data-texto="Nosso espaço para jogar, competir, assistir e se divertir juntos. 🎮🔥❤️"
+                data-imagem="image/casa-jogos.jpeg"
+            >
+                <img src="image/casa-jogos.jpeg" alt="Nossa sala de jogos">
+                <span class="ambiente-sombra"></span>
+                <span class="ambiente-icone">🎮</span>
+
+                <span class="ambiente-texto">
+                    <strong>Sala de Jogos</strong>
+                    <small>Games e diversão</small>
+                </span>
+            </button>
+
+            <button
+                class="ambiente ambiente-sonho"
+                data-titulo="Nosso futuro"
+                data-texto="A nossa casa dos sonhos: cada detalhe para viver a nossa história. ❤️"
+                data-imagem="image/casa-frente.jpg"
+            >
+                <img src="image/casa-frente.jpg" alt="Nossa casa dos sonhos">
+                <span class="ambiente-sombra"></span>
+                <span class="ambiente-icone">♡</span>
+
+                <span class="ambiente-texto">
+                    <strong>Nosso futuro</strong>
+                    <small>Em construção</small>
+                </span>
+            </button>
+
+        </div>
+
+
+        <!-- DETALHES -->
+
+        <div class="casa-detalhes">
+
+            <div class="detalhe">
+                <strong>01</strong>
+                <span>Nosso lugar</span>
+                <p>Um espaço feito para nós.</p>
+            </div>
+
+            <div class="detalhe">
+                <strong>02</strong>
+                <span>Nossos momentos</span>
+                <p>Cada canto terá uma lembrança.</p>
+            </div>
+
+            <div class="detalhe">
+                <strong>03</strong>
+                <span>Nosso futuro</span>
+                <p>Um sonho que vamos construir.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         CONVERSA
+    ========================================== -->
+
+    <section class="pagina" id="conversa">
+
+        <h2 class="titulo">Nossa Conversa 💬 ❤️</h2>
+
+        <div class="conversa-container">
+
+            <div class="conversa-topo">
+
+                <span class="conversa-voltar">‹</span>
+
+                <img
+                    src="image/depois_camilly.jpeg"
+                    alt="Camilly"
+                    class="conversa-foto"
+                >
+
+                <div class="conversa-nome">
+                    <strong>c'amiis</strong>
+                    <span>🔥 12</span>
+                </div>
+
+                <span class="conversa-pesquisa">⌕</span>
+                <span class="conversa-menu">•••</span>
+
+            </div>
+
+            <div class="conversa-chat" id="conversaChat"></div>
+
+            <div class="conversa-controles">
+
+                <button id="proximaConversa">
+                    Próxima mensagem ❤️
+                </button>
+
+                <button id="reiniciarConversa">
+                    ↻
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer>
+        Feito com amor por Raphael para Camilly ❤️
+    </footer>
+
+
+    <script src="javascript/script.js"></script>
+
 </body>
+
 </html>
