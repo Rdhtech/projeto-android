@@ -1,6 +1,6 @@
-/* =========================================
+/* =========================================================
    NAVEGAÇÃO
-========================================= */
+========================================================= */
 
 function mostrarPagina(id) {
 
@@ -14,59 +14,104 @@ function mostrarPagina(id) {
 
     if (pagina) {
         pagina.classList.add("ativa");
-        window.scrollTo(0, 0);
     }
 
-    fecharMenu();
-}
+    fecharMenuMobile();
 
-
-/* =========================================
-   MENU
-========================================= */
-
-const menuToggle = document.getElementById("menuToggle");
-const siteNav = document.getElementById("siteNav");
-
-function fecharMenu() {
-
-    if (!menuToggle || !siteNav) return;
-
-    menuToggle.classList.remove("ativo");
-    siteNav.classList.remove("menu-aberto");
-    menuToggle.setAttribute("aria-expanded", "false");
-}
-
-if (menuToggle && siteNav) {
-
-    menuToggle.addEventListener("click", () => {
-
-        const estaAberto = siteNav.classList.toggle("menu-aberto");
-
-        menuToggle.classList.toggle("ativo", estaAberto);
-        menuToggle.setAttribute("aria-expanded", String(estaAberto));
-    });
-
-    document.addEventListener("click", event => {
-
-        if (!event.target.closest("header")) {
-            fecharMenu();
-        }
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
     });
 }
 
 
-/* =========================================
+/* =========================================================
+   MENU MOBILE
+========================================================= */
+
+const menuMobile = document.getElementById("menuMobile");
+const menuMobileBtn = document.getElementById("menuMobileBtn");
+const fecharMenuBtn = document.getElementById("fecharMenuMobile");
+const menuMobileOverlay = document.getElementById("menuMobileOverlay");
+
+
+function abrirMenuMobile() {
+
+    if (!menuMobile || !menuMobileOverlay) return;
+
+    menuMobile.classList.add("aberto");
+    menuMobileOverlay.classList.add("aberto");
+
+    document.body.style.overflow = "hidden";
+}
+
+
+function fecharMenuMobile() {
+
+    if (!menuMobile || !menuMobileOverlay) return;
+
+    menuMobile.classList.remove("aberto");
+    menuMobileOverlay.classList.remove("aberto");
+
+    document.body.style.overflow = "";
+}
+
+
+if (menuMobileBtn) {
+
+    menuMobileBtn.addEventListener("click", abrirMenuMobile);
+
+}
+
+
+if (fecharMenuBtn) {
+
+    fecharMenuBtn.addEventListener("click", fecharMenuMobile);
+
+}
+
+
+if (menuMobileOverlay) {
+
+    menuMobileOverlay.addEventListener("click", fecharMenuMobile);
+
+}
+
+
+/* ESC FECHA O MENU */
+
+document.addEventListener("keydown", event => {
+
+    if (event.key === "Escape") {
+        fecharMenuMobile();
+    }
+
+});
+
+
+/* =========================================================
    CONTADOR
-========================================= */
+========================================================= */
 
-const dataNamoro = new Date(2026, 2, 29, 0, 0, 0);
+const dataNamoro = new Date(
+    2026,
+    2,
+    29,
+    0,
+    0,
+    0
+);
+
 
 function atualizarTempo() {
 
     const agora = new Date();
 
     let diferenca = agora - dataNamoro;
+
+    if (diferenca < 0) {
+        diferenca = 0;
+    }
 
     const dias = Math.floor(
         diferenca / (1000 * 60 * 60 * 24)
@@ -94,20 +139,21 @@ function atualizarTempo() {
 
     if (tempo) {
 
-        tempo.innerHTML =
+        tempo.textContent =
             `${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos ❤️`;
 
     }
 }
+
 
 setInterval(atualizarTempo, 1000);
 
 atualizarTempo();
 
 
-/* =========================================
+/* =========================================================
    EU TE AMO
-========================================= */
+========================================================= */
 
 function euTeAmo() {
 
@@ -116,10 +162,12 @@ function euTeAmo() {
 
     if (!mensagem) return;
 
+
     mensagem.innerHTML = `
         <p>Eu te amo mais do que consigo explicar. ❤️</p>
         <p>Você é uma das melhores partes da minha vida. ❤️</p>
     `;
+
 
     for (let i = 0; i < 15; i++) {
 
@@ -128,7 +176,7 @@ function euTeAmo() {
 
         coracao.classList.add("coracao");
 
-        coracao.innerHTML = "❤️";
+        coracao.textContent = "❤️";
 
         coracao.style.left =
             Math.random() * 100 + "vw";
@@ -141,16 +189,21 @@ function euTeAmo() {
 
         document.body.appendChild(coracao);
 
+
         setTimeout(() => {
+
             coracao.remove();
+
         }, 5000);
+
     }
+
 }
 
 
-/* =========================================
+/* =========================================================
    CONVERSA SIMULADA
-========================================= */
+========================================================= */
 
 const mensagensConversa = [
 
@@ -171,9 +224,7 @@ const mensagensConversa = [
 
     {
         lado: "ela",
-
         resposta: "Vc tbm gosta de Hungria?",
-
         texto: "Simmm"
     },
 
@@ -219,7 +270,9 @@ function adicionarMensagem(mensagem) {
         "mensagem-linha " + mensagem.lado;
 
 
-    /* VÍDEO */
+    /* =====================================================
+       VÍDEO
+    ===================================================== */
 
     if (mensagem.video) {
 
@@ -247,7 +300,9 @@ function adicionarMensagem(mensagem) {
     }
 
 
-    /* RESPOSTA */
+    /* =====================================================
+       RESPOSTA
+    ===================================================== */
 
     else if (mensagem.resposta) {
 
@@ -276,7 +331,9 @@ function adicionarMensagem(mensagem) {
     }
 
 
-    /* MENSAGEM NORMAL */
+    /* =====================================================
+       MENSAGEM NORMAL
+    ===================================================== */
 
     else {
 
@@ -305,10 +362,13 @@ function adicionarMensagem(mensagem) {
 
     chatConversa.scrollTop =
         chatConversa.scrollHeight;
+
 }
 
 
-/* PRÓXIMA */
+/* =========================================================
+   PRÓXIMA MENSAGEM
+========================================================= */
 
 if (botaoProxima) {
 
@@ -333,6 +393,11 @@ if (botaoProxima) {
 
                 botaoProxima.textContent =
                     "Fim da conversa ❤️";
+
+                botaoProxima.disabled = true;
+
+                botaoProxima.style.opacity = "0.7";
+
             }
 
         }
@@ -342,7 +407,9 @@ if (botaoProxima) {
 }
 
 
-/* REINICIAR */
+/* =========================================================
+   REINICIAR CONVERSA
+========================================================= */
 
 if (botaoReiniciar) {
 
@@ -350,11 +417,172 @@ if (botaoReiniciar) {
 
         indiceConversa = 0;
 
-        chatConversa.innerHTML = "";
+        if (chatConversa) {
+            chatConversa.innerHTML = "";
+        }
 
-        botaoProxima.textContent =
-            "Próxima mensagem ❤️";
+        if (botaoProxima) {
+
+            botaoProxima.textContent =
+                "Próxima mensagem ❤️";
+
+            botaoProxima.disabled = false;
+
+            botaoProxima.style.opacity = "1";
+
+        }
 
     });
 
 }
+
+
+/* =========================================================
+   NOSSA CASA - PONTOS
+========================================================= */
+
+const pontosCasa =
+    document.querySelectorAll(".casa-ponto");
+
+const casaCard =
+    document.getElementById("casaCard");
+
+const cardTitulo =
+    document.getElementById("cardTitulo");
+
+const cardTexto =
+    document.getElementById("cardTexto");
+
+const cardImagem =
+    document.getElementById("cardImagem");
+
+const fecharCard =
+    document.getElementById("fecharCard");
+
+
+function abrirAmbiente(elemento) {
+
+    if (!elemento || !casaCard) return;
+
+
+    if (cardTitulo) {
+
+        cardTitulo.textContent =
+            elemento.dataset.titulo || "Nossa casa";
+
+    }
+
+
+    if (cardTexto) {
+
+        cardTexto.textContent =
+            elemento.dataset.texto || "";
+
+    }
+
+
+    if (
+        cardImagem &&
+        elemento.dataset.imagem
+    ) {
+
+        cardImagem.src =
+            elemento.dataset.imagem;
+
+        cardImagem.alt =
+            elemento.dataset.titulo || "";
+
+        cardImagem.classList.add("visivel");
+
+    }
+
+
+    casaCard.classList.add("aberto");
+
+}
+
+
+/* =========================================================
+   PONTOS DA CASA
+========================================================= */
+
+pontosCasa.forEach(ponto => {
+
+    ponto.addEventListener("click", () => {
+
+        abrirAmbiente(ponto);
+
+    });
+
+});
+
+
+/* =========================================================
+   CARDS DOS AMBIENTES
+========================================================= */
+
+document
+    .querySelectorAll(".ambiente")
+    .forEach(ambiente => {
+
+        ambiente.addEventListener("click", () => {
+
+            abrirAmbiente(ambiente);
+
+        });
+
+    });
+
+
+/* =========================================================
+   FECHAR CARD
+========================================================= */
+
+if (fecharCard) {
+
+    fecharCard.addEventListener("click", () => {
+
+        if (casaCard) {
+
+            casaCard.classList.remove("aberto");
+
+        }
+
+    });
+
+}
+
+
+/* =========================================================
+   CLICAR FORA DO CARD
+========================================================= */
+
+if (casaCard) {
+
+    document.addEventListener("click", event => {
+
+        if (
+            casaCard.classList.contains("aberto") &&
+            !casaCard.contains(event.target) &&
+            !event.target.closest(".casa-ponto") &&
+            !event.target.closest(".ambiente")
+        ) {
+
+            casaCard.classList.remove("aberto");
+
+        }
+
+    });
+
+}
+
+
+/* =========================================================
+   INICIAR
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    atualizarTempo();
+
+});
