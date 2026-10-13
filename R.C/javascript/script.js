@@ -578,6 +578,201 @@ if (casaCard) {
 
 
 /* =========================================================
+   PLAYER SPOTIFY PERSONALIZADO (OFICIAL)
+========================================================= */
+
+const spPlaylist = [
+    {
+        title: "Na Linha do Tempo",
+        artist: "Raphael & Camilly",
+        src: "music/musica1.mp3",
+        cover: "image/foto1.jpg"
+    },
+    {
+        title: "Nossa Música Especial",
+        artist: "Raphael & Camilly",
+        src: "music/musica2.mp3",
+        cover: "image/foto2.jpg"
+    }
+    // DICA: Para adicionar mais músicas, basta adicionar novos blocos aqui:
+    // { title: "Nome", artist: "Cantor", src: "music/musica3.mp3", cover: "image/foto3.jpg" }
+];
+
+let spIndex = 0;
+const spAudio = document.getElementById("spAudio");
+
+function carregarSpMusica(index) {
+    if (!spAudio) return;
+    spIndex = index;
+    spAudio.src = spPlaylist[index].src;
+    document.getElementById("spTitle").innerText = spPlaylist[index].title;
+    document.getElementById("spArtist").innerText = spPlaylist[index].artist;
+    document.getElementById("spCover").src = spPlaylist[index].cover;
+    
+    spAudio.load(); // Garante o carregamento correto do arquivo de áudio
+    destacarMusicaAtiva();
+}
+
+function toggleSpPlay() {
+    if (!spAudio) return;
+    const playIcon = document.getElementById("spPlayIcon");
+    if (spAudio.paused) {
+        spAudio.play().then(() => {
+            if (playIcon) playIcon.className = "fa-solid fa-pause";
+        });
+    } else {
+        spAudio.pause();
+        if (playIcon) playIcon.className = "fa-solid fa-play";
+    }
+}
+
+function mudarSpMusica(direcao) {
+    if (direcao === 'next') {
+        spIndex = (spIndex + 1) % spPlaylist.length;
+    } else {
+        spIndex = (spIndex - 1 + spPlaylist.length) % spPlaylist.length;
+    }
+    carregarSpMusica(spIndex);
+    
+    spAudio.play().then(() => {
+        const playIcon = document.getElementById("spPlayIcon");
+        if (playIcon) playIcon.className = "fa-solid fa-pause";
+    }).catch(err => {
+        console.log("Erro ao reproduzir:", err);
+    });
+}
+
+if (spAudio) {
+    spAudio.ontimeupdate = function() {
+        if (spAudio.duration) {
+            const pct = (spAudio.currentTime / spAudio.duration) * 100;
+            const bar = document.getElementById("spProgressBar");
+            if (bar) bar.style.width = pct + "%";
+            
+            const cur = document.getElementById("spCurrentTime");
+            const dur = document.getElementById("spDurationTime");
+            if (cur) cur.innerText = formatSpTime(spAudio.currentTime);
+            if (dur) dur.innerText = formatSpTime(spAudio.duration);
+        }
+    };
+
+    // Quando a música acaba, gerencia repetição, shuffle ou próxima
+    spAudio.onended = function() {
+        if (isRepeat) {
+            spAudio.currentTime = 0;
+            spAudio.play();
+        } else if (isShuffle) {
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * spPlaylist.length);
+            } while (randomIndex === spIndex && spPlaylist.length > 1);
+            carregarSpMusica(randomIndex);
+            spAudio.play().then(() => {
+                const playIcon = document.getElementById("spPlayIcon");
+                if (playIcon) playIcon.className = "fa-solid fa-pause";
+            });
+        } else {
+            mudarSpMusica('next');
+        }
+    };
+}
+
+function seekSpAudio(e) {
+    if (!spAudio || !spAudio.duration) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const pos = (e.clientX - rect.left) / rect.width;
+    spAudio.currentTime = pos * spAudio.duration;
+}
+
+function formatSpTime(s) {
+    const min = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+}
+
+function curtirSpotify(btn) {
+    btn.style.transform = "scale(1.4)";
+    setTimeout(() => btn.style.transform = "scale(1)", 200);
+}
+
+function renderizarListaSpotify() {
+    const listaContainer = document.getElementById("spTrackList");
+    if (!listaContainer) return;
+    
+    listaContainer.innerHTML = "";
+    spPlaylist.forEach((musica, idx) => {
+        const item = document.createElement("div");
+        item.className = `sp-track-item ${idx === spIndex ? 'ativa' : ''}`;
+        item.innerHTML = `
+            <img src="${musica.cover}" alt="${musica.title}">
+            <div class="sp-track-info">
+                <strong>${musica.title}</strong>
+                <span>${musica.artist}</span>
+            </div>
+            <span>♫</span>
+        `;
+        item.onclick = () => {
+            carregarSpMusica(idx);
+            spAudio.play().then(() => {
+                const playIcon = document.getElementById("spPlayIcon");
+                if (playIcon) playIcon.className = "fa-solid fa-pause";
+            });
+        };
+        listaContainer.appendChild(item);
+    });
+}
+
+function destacarMusicaAtiva() {
+    const itens = document.querySelectorAll(".sp-track-item");
+    itens.forEach((item, idx) => {
+        if (idx === spIndex) {
+            item.classList.add("ativa");
+        } else {
+            item.classList.remove("ativa");
+        }
+    });
+}
+
+// Inicializar player ao carregar a página
+if (spPlaylist.length > 0) {
+    carregarSpMusica(0);
+    renderizarListaSpotify();
+}
+
+
+/* =========================================================
+   CONTROLES EXTRAS DO SPOTIFY (SHUFFLE E REPEAT)
+========================================================= */
+
+let isShuffle = false;
+let isRepeat = false;
+
+function toggleShuffle() {
+    isShuffle = !isShuffle;
+    const btn = document.getElementById("spShuffleBtn");
+    if (btn) {
+        if (isShuffle) {
+            btn.classList.add("ativo");
+        } else {
+            btn.classList.remove("ativo");
+        }
+    }
+}
+
+function toggleRepeat() {
+    isRepeat = !isRepeat;
+    const btn = document.getElementById("spRepeatBtn");
+    if (btn) {
+        if (isRepeat) {
+            btn.classList.add("ativo");
+        } else {
+            btn.classList.remove("ativo");
+        }
+    }
+}
+
+
+/* =========================================================
    INICIAR
 ========================================================= */
 

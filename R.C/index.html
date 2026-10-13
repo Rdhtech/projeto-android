@@ -18,6 +18,8 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -34,6 +36,7 @@
             <button onclick="mostrarPagina('home')">Início</button>
             <button onclick="mostrarPagina('fotos')">Fotos</button>
             <button onclick="mostrarPagina('antesdepois')">Antes e Depois</button>
+            <button onclick="mostrarPagina('spotify')">Spotify 🎵</button>
             <button onclick="mostrarPagina('musicas')">Músicas</button>
             <button onclick="mostrarPagina('conversa')">1° Conversa</button>
             <button onclick="mostrarPagina('quemsomos')">Quem Somos</button>
@@ -94,6 +97,11 @@
                 Músicas
             </button>
 
+            <button onclick="mostrarPagina('spotify')">
+    <span>♫</span>
+    Spotify 🎵
+</button>
+
             <button onclick="mostrarPagina('conversa')">
                 <span>♡</span>
                 1° Conversa
@@ -119,7 +127,7 @@
 
 
     <!-- =========================================
-         INÍCIO
+         INÍCIO 
     ========================================== -->
 
     <section class="pagina ativa inicio" id="home">
@@ -140,6 +148,7 @@
             <h3 id="tempo"></h3>
 
         </div>
+
 
         <div class="botao-amor">
 
@@ -275,14 +284,14 @@
 
 
     <!-- =========================================
-         MÚSICAS
+         MÚSICAS 
     ========================================== -->
 
     <section class="pagina" id="musicas">
 
         <h2 class="titulo">Nossas Músicas 🎵</h2>
 
-        <div class="musicas">
+        <div class="musicas" style="margin-top: 30px;">
 
             <div class="musica">
 
@@ -322,6 +331,71 @@
 
     </section>
 
+
+    <!-- =========================================
+     PÁGINA SPOTIFY
+========================================== -->
+
+<section class="pagina" id="spotify">
+
+    <h2 class="titulo">Nosso Spotify 🎧</h2>
+
+    <div class="spotify-app-container">
+        
+        <!-- Player Principal -->
+        <div class="spotify-player-main">
+            <img src="image/foto20.jpeg" alt="Capa" id="spCover" class="sp-cover-grande">
+            
+            <div class="sp-info-main">
+                <h3 id="spTitle">Na Linha do Tempo</h3>
+                <p id="spArtist">Raphael & Camilly</p>
+            </div>
+
+            <button class="sp-like-main" onclick="curtirSpotify(this)">❤️</button>
+        </div>
+
+        <audio id="spAudio" src="music/musica1.mp3"></audio>
+
+        <!-- Barra de Progresso -->
+        <div class="sp-progress-area" onclick="seekSpAudio(event)">
+            <div class="sp-progress-bar" id="spProgressBar"></div>
+        </div>
+        <div class="sp-time-area">
+            <span id="spCurrentTime">0:00</span>
+            <span id="spDurationTime">0:00</span>
+        </div>
+
+        <!-- Botões de Controle com ícones brancos do Font Awesome -->
+        <div class="sp-controls-main">
+            <button class="sp-ctrl-secundario" id="spShuffleBtn" onclick="toggleShuffle()" title="Aleatório">
+                <i class="fa-solid fa-shuffle"></i>
+            </button>
+            <button class="sp-ctrl-principal" onclick="mudarSpMusica('prev')" title="Anterior">
+                <i class="fa-solid fa-backward-step"></i>
+            </button>
+            <button class="sp-play-btn-redondo" onclick="toggleSpPlay()" id="spPlayBtn" title="Play/Pause">
+                <i class="fa-solid fa-play" id="spPlayIcon"></i>
+            </button>
+            <button class="sp-ctrl-principal" onclick="mudarSpMusica('next')" title="Próxima">
+                <i class="fa-solid fa-forward-step"></i>
+            </button>
+            <button class="sp-ctrl-secundario" id="spRepeatBtn" onclick="toggleRepeat()" title="Repetir">
+                <i class="fa-solid fa-repeat"></i>
+            </button>
+        </div>
+
+        
+        <!-- Lista de Músicas (Playlist) -->
+        <div class="sp-playlist">
+            <h4>Músicas do Casal 🎶</h4>
+            <div class="sp-track-list" id="spTrackList">
+                <!-- As músicas entram aqui automaticamente -->
+            </div>
+        </div>
+
+    </div>
+
+</section>
 
     <!-- =========================================
          ANTES E DEPOIS
@@ -422,7 +496,7 @@
 
 
     <!-- =========================================
-         NOSSA CASA
+         NOSSA CASA 
     ========================================== -->
 
     <section class="pagina nossa-casa" id="casa">
@@ -463,27 +537,6 @@
 
                 <p>
                     E cada cantinho vai ter uma história nossa.
-                </p>
-
-            </div>
-
-            
-
-                <span class="card-icon">♡</span>
-
-                <img
-                    class="card-imagem"
-                    id="cardImagem"
-                    src=""
-                    alt=""
-                >
-
-                <h3 id="cardTitulo">
-                    Nossa casa
-                </h3>
-
-                <p id="cardTexto">
-                    Clique nos pontos da casa para conhecer cada cantinho.
                 </p>
 
             </div>
@@ -684,6 +737,8 @@
             </button>
 
         </div>
+
+        
 
 
         <!-- DETALHES -->
