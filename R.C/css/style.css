@@ -404,49 +404,6 @@ header {
 }
 
 
-/* =========================================================
-   MÚSICAS
-========================================================= */
-
-.musicas {
-    max-width: 900px;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.musica {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 25px;
-    border-radius: 20px;
-    transition: 0.3s;
-    backdrop-filter: blur(18px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-}
-
-.musica:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 20px rgba(255, 77, 136, 0.3);
-}
-
-.musica h3 {
-    color: #ff4d88;
-    margin-bottom: 15px;
-}
-
-.musica p {
-    margin-bottom: 20px;
-    line-height: 1.7;
-    opacity: 0.9;
-}
-
-audio {
-    width: 100%;
-    max-width: 600px;
-}
-
 
 /* =========================================================
    BOTÃO EU TE AMO
