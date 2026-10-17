@@ -40,6 +40,7 @@
             <button onclick="mostrarPagina('conversa')">1° Conversa</button>
             <button onclick="mostrarPagina('quemsomos')">Quem Somos</button>
             <button onclick="mostrarPagina('casa')">Nossa Casa 🏡</button>
+            <button onclick="mostrarPagina('memoria')">Jogo da Memória 💞</button>
         </nav>
 
         <!-- BOTÃO MOBILE -->
@@ -57,7 +58,14 @@
          MENU MOBILE
     ========================================== -->
 
-    <div class="menu-mobile-overlay" id="menuMobileOverlay"></div>
+    
+
+    <!-- BOTÃO MOBILE DE 3 BARRAS -->
+<button class="menu-mobile-btn" id="menuMobileBtn" aria-label="Abrir menu">
+    <div class="hamburger-bar"></div>
+    <div class="hamburger-bar"></div>
+    <div class="hamburger-bar"></div>
+</button>
 
     <aside class="menu-mobile" id="menuMobile">
 
@@ -67,6 +75,12 @@
                 <span>RAPHAEL & CAMILLY</span>
                 <small>Nosso cantinho ❤️</small>
             </div>
+
+            <button class="menu-mobile-btn" id="menuMobileBtn" aria-label="Abrir menu">
+    <div class="hamburger-bar"></div>
+    <div class="hamburger-bar"></div>
+    <div class="hamburger-bar"></div>
+</button> 
 
             <button id="fecharMenuMobile" aria-label="Fechar menu">
                 ×
@@ -109,6 +123,11 @@
             <button onclick="mostrarPagina('casa')">
                 <span>⌂</span>
                 Nossa Casa 🏡
+            </button>
+
+            <button onclick="mostrarPagina('memoria')">
+                <span>♡</span>
+                Jogo da Memória 💞
             </button>
 
         </nav>
@@ -760,6 +779,82 @@
 
         </div>
 
+    </section>
+
+
+    <!-- PÁGINA DO JOGO DA MEMÓRIA -->
+    <section class="pagina memoria-pagina ativa" id="memoria">
+
+        <div class="memoria-cabecalho">
+            <span class="memoria-etiqueta">RAPHAEL & CAMILLY</span>
+
+            <h2 class="titulo">Jogo da Memória 💞</h2>
+
+            <p>
+                Encontre os pares das nossas fotos.
+                Cada combinação é uma lembrança nossa. ❤️
+            </p>
+        </div>
+
+        <div class="memoria-painel">
+
+            <div class="memoria-estatistica">
+                <div>
+                    <span>Movimentos</span>
+                    <strong id="memoriaMovimentos">0</strong>
+                </div>
+
+                <div>
+                    <span>Pares encontrados</span>
+                    <strong id="memoriaPares">0 / 21</strong>
+                </div>
+
+                <div>
+                    <span>Tempo</span>
+                    <strong id="memoriaTempo">00:00</strong>
+                </div>
+            </div>
+
+            <div class="memoria-acoes">
+                <label for="memoriaDificuldade">
+                    Quantidade de pares
+                </label>
+
+                <select id="memoriaDificuldade">
+                    <option value="21" selected>Todas as fotos (21 pares)</option>
+                    <option value="12">12 pares</option>
+                    <option value="8">8 pares</option>
+                </select>
+
+                <button type="button" id="memoriaReiniciar">
+                    Embaralhar novamente ↻
+                </button>
+            </div>
+
+            <p class="memoria-status" id="memoriaStatus" aria-live="polite">
+                Encontre os pares iguais para completar o jogo! ❤️
+            </p>
+
+            <div class="memoria-tabuleiro" id="memoriaTabuleiro" aria-label="Tabuleiro do jogo da memória">
+            </div>
+
+            <div class="memoria-vitoria" id="memoriaVitoria" hidden>
+                <span>💖</span>
+
+                <h3>Você encontrou todas as nossas lembranças!</h3>
+
+                <p id="memoriaResultado"></p>
+
+                <button type="button" id="memoriaJogarNovamente">
+                    Jogar novamente ❤️
+                </button>
+            </div>
+
+            <p class="memoria-nota">
+                Um jogo feito com amor para guardar nossas lembranças. ❤️
+            </p>
+
+        </div>
     </section>
 
 

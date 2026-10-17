@@ -404,7 +404,6 @@ header {
 }
 
 
-
 /* =========================================================
    BOTÃO EU TE AMO
 ========================================================= */
@@ -659,167 +658,6 @@ header {
     color: #ccc;
     font-size: 15px;
     line-height: 1.6;
-}
-
-
-/* =========================================================
-   PONTOS CASA
-========================================================= */
-
-.casa-ponto {
-    position: absolute;
-    width: 28px;
-    height: 28px;
-    padding: 0;
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(8px);
-    cursor: pointer;
-    z-index: 5;
-    transition: 0.3s ease;
-}
-
-.casa-ponto span {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    background: white;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
-}
-
-.casa-ponto::before {
-    content: "";
-    position: absolute;
-    inset: -10px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    animation: pulsarCasa 2s infinite;
-}
-
-.casa-ponto:hover {
-    transform: scale(1.25);
-    background: rgba(255, 127, 169, 0.35);
-}
-
-.ponto-sala {
-    left: 52%;
-    top: 60%;
-}
-
-.ponto-quarto {
-    left: 67%;
-    top: 34%;
-}
-
-.ponto-piscina {
-    right: 14%;
-    bottom: 19%;
-}
-
-.ponto-jardim {
-    left: 30%;
-    bottom: 15%;
-}
-
-@keyframes pulsarCasa {
-
-    0% {
-        transform: scale(0.7);
-        opacity: 0.8;
-    }
-
-    70% {
-        transform: scale(1.25);
-        opacity: 0;
-    }
-
-    100% {
-        transform: scale(1.25);
-        opacity: 0;
-    }
-}
-
-
-/* =========================================================
-   CARD CASA
-========================================================= */
-
-.casa-card {
-    position: absolute;
-    right: 35px;
-    bottom: 35px;
-    width: 300px;
-    padding: 28px;
-    border-radius: 20px;
-    background: rgba(10, 10, 10, 0.82);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-    z-index: 10;
-    opacity: 0;
-    transform: translateY(20px);
-    pointer-events: none;
-    transition: 0.35s ease;
-}
-
-.casa-card.aberto {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
-.card-icon {
-    display: block;
-    margin-bottom: 12px;
-    color: #ff7fa9;
-    font-size: 28px;
-}
-
-.casa-card h3 {
-    margin: 0 0 10px;
-    font-size: 23px;
-}
-
-.casa-card p {
-    margin: 0;
-    color: #aaa;
-    line-height: 1.6;
-    font-size: 14px;
-}
-
-.card-imagem {
-    display: none;
-    width: 100%;
-    height: 125px;
-    margin: 0 0 16px;
-    border-radius: 12px;
-    object-fit: cover;
-}
-
-.card-imagem.visivel {
-    display: block;
-}
-
-.fechar-card {
-    position: absolute;
-    right: 15px;
-    top: 12px;
-    border: none;
-    background: none;
-    color: #aaa;
-    font-size: 25px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.fechar-card:hover {
-    color: white;
-    transform: rotate(90deg);
 }
 
 
@@ -1269,210 +1107,6 @@ footer {
 
 
 /* =========================================================
-   TABLET
-========================================================= */
-
-@media (max-width: 900px) {
-
-    .menu-desktop {
-        gap: 18px;
-    }
-
-    .menu-desktop button {
-        font-size: 15px;
-    }
-
-    .ambientes-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .casa-detalhes {
-        grid-template-columns: 1fr;
-    }
-}
-
-
-/* =========================================================
-   CELULAR
-========================================================= */
-
-@media (max-width: 700px) {
-
-    header {
-        width: auto;
-        left: auto;
-        right: 15px;
-        transform: none;
-        top: 15px;
-        padding: 7px;
-        border-radius: 15px;
-    }
-
-    .menu-desktop {
-        display: none;
-    }
-
-    .menu-mobile-btn {
-        display: flex;
-    }
-
-    .pagina {
-        padding: 100px 15px 45px;
-    }
-
-    .inicio {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-
-    .inicio h1 {
-        font-size: 40px;
-    }
-
-    .inicio p {
-        font-size: 16px;
-    }
-
-    .contador {
-        width: 100%;
-        max-width: 400px;
-    }
-
-    .titulo {
-        font-size: 32px;
-    }
-
-    .galeria {
-        grid-template-columns: 1fr;
-        gap: 25px;
-    }
-
-    .antes-depois {
-        grid-template-columns: 1fr;
-        max-width: 320px;
-    }
-
-    .antes-depois .lado img {
-        width: 250px;
-        height: 250px;
-    }
-
-    .nossa-casa {
-        padding: 80px 15px;
-    }
-
-    .casa-visual {
-        height: 600px;
-        min-height: 600px;
-        border-radius: 22px;
-    }
-
-    .casa-overlay {
-        background:
-            linear-gradient(
-                180deg,
-                rgba(0, 0, 0, 0.15),
-                rgba(0, 0, 0, 0.85)
-            );
-    }
-
-    .casa-frase {
-        left: 25px;
-        right: 25px;
-        top: auto;
-        bottom: 150px;
-        transform: none;
-    }
-
-    .casa-frase h3 {
-        font-size: 43px;
-    }
-
-    .casa-card {
-        left: 20px;
-        right: 20px;
-        bottom: 20px;
-        width: auto;
-    }
-
-    .ambientes-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .ambiente {
-        min-height: 220px;
-    }
-
-    .casa-detalhes {
-        grid-template-columns: 1fr;
-    }
-
-    .ponto-sala {
-        left: 48%;
-        top: 42%;
-    }
-
-    .ponto-quarto {
-        left: 70%;
-        top: 28%;
-    }
-
-    .ponto-piscina {
-        right: 15%;
-        bottom: 38%;
-    }
-
-    .ponto-jardim {
-        left: 25%;
-        bottom: 32%;
-    }
-
-    .conversa-container {
-        width: 100%;
-        max-width: 390px;
-        height: 760px;
-        border-radius: 20px;
-    }
-
-    .mensagem-balao {
-        font-size: 14px;
-    }
-
-    .conversa-video {
-        width: 190px;
-        height: 260px;
-    }
-}
-
-
-/* =========================================================
-   CELULAR PEQUENO
-========================================================= */
-
-@media (max-width: 400px) {
-
-    .inicio h1 {
-        font-size: 34px;
-    }
-
-    .contador {
-        padding: 20px 12px;
-    }
-
-    .casa-frase h3 {
-        font-size: 37px;
-    }
-
-    .casa-card {
-        padding: 22px;
-    }
-
-    .conversa-container {
-        height: 700px;
-    }
-}
-
-/* =========================================================
    ESTILOS DA PÁGINA SPOTIFY
 ========================================================= */
 
@@ -1552,28 +1186,64 @@ footer {
 
 .sp-controls-main {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    gap: 30px;
-    margin: 20px 0;
+    margin: 25px 10px 15px 10px;
 }
 
-.sp-controls-main button {
+.sp-ctrl-secundario {
     background: none;
     border: none;
-    font-size: 26px;
+    font-size: 16px;
     cursor: pointer;
-    color: #fff;
-    transition: transform 0.2s;
+    color: #b3b3b3;
+    transition: color 0.2s, transform 0.2s;
 }
 
-.sp-controls-main button:hover {
+.sp-ctrl-secundario:hover {
+    color: #fff;
     transform: scale(1.1);
 }
 
-.sp-controls-main .sp-play-btn {
-    font-size: 40px;
+.sp-ctrl-secundario.ativo {
     color: #1db954;
+}
+
+.sp-ctrl-principal {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #fff;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.sp-ctrl-principal:hover {
+    color: #1db954;
+    transform: scale(1.1);
+}
+
+.sp-play-btn-redondo {
+    width: 48px;
+    height: 48px;
+    background: #fff;
+    border: none;
+    border-radius: 50%;
+    color: #000;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.2s, background 0.2s;
+    padding-left: 2px;
+}
+
+.sp-play-btn-redondo:hover {
+    transform: scale(1.08);
+    background: #1db954;
+    color: #fff;
 }
 
 .sp-playlist {
@@ -1629,69 +1299,299 @@ footer {
     color: #b3b3b3;
 }
 
+
 /* =========================================================
-   ESTILOS DOS BOTÕES DO SPOTIFY (VERSÃO WEB OFICIAL)
+   JOGO DA MEMÓRIA — ANIMAÇÕES E EFEITOS FLUIDOS
 ========================================================= */
 
-.sp-controls-main {
+.memoria-pagina {
+    background:
+        radial-gradient(circle at 10% 5%, rgba(255, 77, 136, .12), transparent 32%),
+        radial-gradient(circle at 90% 45%, rgba(139, 92, 246, .10), transparent 34%);
+}
+
+.memoria-cabecalho {
+    max-width: 760px;
+    margin: 0 auto 32px;
+    text-align: center;
+}
+
+.memoria-etiqueta {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #ff9fbd;
+    font-size: 11px;
+    letter-spacing: 4px;
+    font-weight: 700;
+}
+
+.memoria-cabecalho .titulo {
+    margin-bottom: 14px;
+}
+
+.memoria-cabecalho > p {
+    color: #c9c1c5;
+    line-height: 1.7;
+}
+
+.memoria-painel {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: clamp(16px, 3vw, 30px);
+    border: 1px solid rgba(255, 255, 255, .10);
+    border-radius: 26px;
+    background: rgba(15, 13, 16, .78);
+    box-shadow: 0 25px 80px rgba(0, 0, 0, .35);
+    backdrop-filter: blur(18px);
+}
+
+.memoria-estatistica {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.memoria-estatistica > div {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    gap: 7px;
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .035);
+    text-align: center;
+}
+
+.memoria-estatistica span {
+    color: #aaa;
+    font-size: 12px;
+}
+
+.memoria-estatistica strong {
+    color: #ff8eb2;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(18px, 2.5vw, 25px);
+}
+
+.memoria-acoes {
+    display: flex;
     align-items: center;
-    margin: 25px 10px 15px 10px;
-}
-
-.sp-ctrl-secundario {
-    background: none;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    color: #b3b3b3; /* Cinza clássico do app desativado */
-    transition: color 0.2s, transform 0.2s;
-}
-
-.sp-ctrl-secundario:hover {
-    color: #fff;
-    transform: scale(1.1);
-}
-
-.sp-ctrl-secundario.ativo {
-    color: #1db954; /* Fica verde limão quando ativado */
-}
-
-.sp-ctrl-principal {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: #fff; /* Branco puro idêntico ao Spotify */
-    transition: transform 0.2s, color 0.2s;
-}
-
-.sp-ctrl-principal:hover {
-    color: #1db954;
-    transform: scale(1.1);
-}
-
-/* Botão de Play central redondo branco com ícone preto */
-.sp-play-btn-redondo {
-    width: 48px;
-    height: 48px;
-    background: #fff;
-    border: none;
-    border-radius: 50%;
-    color: #000;
-    font-size: 16px;
-    display: flex;
     justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    transition: transform 0.2s, background 0.2s;
-    padding-left: 2px; /* Centraliza perfeitamente o ícone do play */
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 14px;
 }
 
-.sp-play-btn-redondo:hover {
-    transform: scale(1.08);
-    background: #1db954;
-    color: #fff;
+.memoria-acoes label {
+    color: #ccc;
+    font-size: 13px;
+}
+
+.memoria-acoes select,
+.memoria-acoes button,
+.memoria-vitoria button {
+    min-height: 43px;
+    padding: 10px 15px;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 12px;
+    background: #211820;
+    color: white;
+    font: inherit;
+    cursor: pointer;
+}
+
+.memoria-acoes button,
+.memoria-vitoria button {
+    border-color: transparent;
+    background: linear-gradient(135deg, #ff4d88, #d93673);
+    font-weight: 700;
+    transition: transform .2s, filter .2s;
+}
+
+.memoria-acoes button:hover,
+.memoria-vitoria button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.memoria-status {
+    min-height: 24px;
+    margin: 12px 0 20px;
+    color: #e8c8d5;
+    text-align: center;
+    font-size: 14px;
+}
+
+.memoria-tabuleiro {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 12px;
+}
+
+/* CARTAS E ANIMAÇÃO SUAVE DE GIRO */
+.memoria-carta {
+    position: relative;
+    min-width: 0;
+    aspect-ratio: 1 / 1.08;
+    padding: 0;
+    overflow: visible;
+    border: 1px solid rgba(255, 143, 178, .22);
+    border-radius: 15px;
+    background: transparent;
+    cursor: pointer;
+    perspective: 1000px;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.2s ease;
+}
+
+.memoria-carta:hover {
+    transform: scale(1.03);
+}
+
+.memoria-carta-inner {
+    position: absolute;
+    inset: 0;
+    display: block;
+    border-radius: 15px;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.memoria-carta.virada .memoria-carta-inner,
+.memoria-carta.encontrada .memoria-carta-inner {
+    transform: rotateY(180deg);
+}
+
+.memoria-verso,
+.memoria-frente {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 14px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.memoria-verso {
+    color: #ff9fbd;
+    font-size: clamp(23px, 3vw, 42px);
+    background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, .12), transparent 35%),
+        linear-gradient(145deg, #39202e, #171217);
+}
+
+.memoria-verso::before {
+    position: absolute;
+    inset: 7px;
+    border: 1px solid rgba(255, 159, 189, .22);
+    border-radius: 10px;
+    content: "";
+}
+
+.memoria-frente {
+    transform: rotateY(180deg);
+    background: #211820;
+}
+
+.memoria-frente img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ESTADO DE PAR ENCONTRADO (BRILHO E PULSO) */
+.memoria-carta.encontrada {
+    border-color: #ff4d88;
+    animation: pulsoAcerto 0.6s ease;
+    cursor: default;
+}
+
+.memoria-carta.encontrada .memoria-carta-inner {
+    box-shadow: 0 0 25px rgba(255, 77, 136, 0.6), inset 0 0 10px rgba(255, 77, 136, 0.4);
+    border: 2px solid #ff4d88;
+}
+
+@keyframes pulsoAcerto {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.12); filter: brightness(1.3); }
+    100% { transform: scale(1); }
+}
+
+/* ESTADO DE ERRO (TREMIDA E BORDA VERMELHA) */
+.memoria-carta.errada .memoria-carta-inner {
+    border: 2px solid #ff3344;
+    box-shadow: 0 0 20px rgba(255, 51, 68, 0.6);
+    animation: tremerErro 0.35s ease;
+}
+
+@keyframes tremerErro {
+    0% { transform: rotateY(180deg) translateX(0); }
+    25% { transform: rotateY(180deg) translateX(-6px); }
+    50% { transform: rotateY(180deg) translateX(6px); }
+    75% { transform: rotateY(180deg) translateX(-4px); }
+    100% { transform: rotateY(180deg) translateX(0); }
+}
+
+.memoria-vitoria {
+    padding: 28px 12px 8px;
+    text-align: center;
+    animation: aparecer .45s ease;
+}
+
+.memoria-vitoria[hidden] {
+    display: none;
+}
+
+.memoria-vitoria > span {
+    font-size: 44px;
+}
+
+.memoria-vitoria h3 {
+    margin: 10px 0;
+    color: #ff9fbd;
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(20px, 3vw, 28px);
+}
+
+.memoria-vitoria p {
+    margin-bottom: 18px;
+    color: #d2c7cd;
+    line-height: 1.7;
+}
+
+.memoria-nota {
+    margin-top: 22px;
+    color: #817780;
+    font-size: 12px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 900px) {
+    .memoria-tabuleiro {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 9px;
+    }
+}
+
+@media (max-width: 600px) {
+    .memoria-tabuleiro {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 7px;
+    }
+    .memoria-acoes {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .memoria-acoes select,
+    .memoria-acoes button {
+        width: 100%;
+    }
 }
