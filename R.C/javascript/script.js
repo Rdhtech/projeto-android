@@ -25,38 +25,41 @@ function mostrarPagina(id) {
 
 
 /* =========================================================
-   MENU MOBILE
+   MENU MOBILE ESTILO APPLE
 ========================================================= */
 
-const menuMobile = document.getElementById("menuMobile");
 const menuMobileBtn = document.getElementById("menuMobileBtn");
-const fecharMenuBtn = document.getElementById("fecharMenuMobile");
 const menuMobileOverlay = document.getElementById("menuMobileOverlay");
+const appleHeader = document.querySelector(".apple-header");
+
+function toggleMenuMobile() {
+    if (!menuMobileOverlay || !appleHeader) return;
+    
+    const estaAberto = menuMobileOverlay.classList.contains("aberto");
+
+    if (estaAberto) {
+        fecharMenuMobile();
+    } else {
+        abrirMenuMobile();
+    }
+}
 
 function abrirMenuMobile() {
-    if (!menuMobile || !menuMobileOverlay) return;
-    menuMobile.classList.add("aberto");
+    if (!menuMobileOverlay || !appleHeader) return;
     menuMobileOverlay.classList.add("aberto");
-    document.body.style.overflow = "hidden";
+    appleHeader.classList.add("aberto");
+    document.body.classList.add("menu-aberto");
 }
 
 function fecharMenuMobile() {
-    if (!menuMobile || !menuMobileOverlay) return;
-    menuMobile.classList.remove("aberto");
+    if (!menuMobileOverlay || !appleHeader) return;
     menuMobileOverlay.classList.remove("aberto");
-    document.body.style.overflow = "";
+    appleHeader.classList.remove("aberto");
+    document.body.classList.remove("menu-aberto");
 }
 
 if (menuMobileBtn) {
-    menuMobileBtn.addEventListener("click", abrirMenuMobile);
-}
-
-if (fecharMenuBtn) {
-    fecharMenuBtn.addEventListener("click", fecharMenuMobile);
-}
-
-if (menuMobileOverlay) {
-    menuMobileOverlay.addEventListener("click", fecharMenuMobile);
+    menuMobileBtn.addEventListener("click", toggleMenuMobile);
 }
 
 document.addEventListener("keydown", event => {
@@ -350,14 +353,13 @@ if (spPlaylist.length > 0) {
 
 
 /* =========================================================
-   JOGO DA MEMÓRIA — 10 ÚLTIMAS FOTOS + ANIMAÇÕES
+   JOGO DA MEMÓRIA
 ========================================================= */
 
 function iniciarJogoDaMemoria() {
     const tabuleiro = document.getElementById("memoriaTabuleiro");
     if (!tabuleiro) return;
 
-    // As 10 últimas fotos solicitadas
     const imagensCasal = [
         "image/foto12.jpeg",
         "image/foto13.jpeg",
@@ -451,7 +453,6 @@ function iniciarJogoDaMemoria() {
         movimentos++;
         atualizarPainel();
 
-        // ACERTOU O PAR
         if (primeiraCarta.dataset.par === segundaCarta.dataset.par) {
             primeiraCarta.classList.add("encontrada");
             segundaCarta.classList.add("encontrada");
@@ -484,7 +485,6 @@ function iniciarJogoDaMemoria() {
             return;
         }
 
-        // ERROU O PAR (Animação de erro nas duas cartas)
         bloqueado = true;
         primeiraCarta.classList.add("errada");
         segundaCarta.classList.add("errada");

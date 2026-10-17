@@ -17,7 +17,7 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;600;700;800&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=2026">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -25,118 +25,90 @@
 <body>
 
     <!-- =========================================
-         HEADER / NAVEGAÇÃO
+         HEADER / NAVEGAÇÃO ESTILO APPLE
     ========================================== -->
 
-    <header>
+    <header class="apple-header">
+        <div class="apple-header-container">
+            <!-- LOGO / NOME DO CASAL -->
+            <button class="apple-brand" onclick="mostrarPagina('home')">
+                <span class="apple-heart-icon">❤️</span>
+                <span class="apple-title">Raphael & Camilly</span>
+            </button>
 
-        <!-- MENU DESKTOP -->
+            <!-- MENU DESKTOP -->
+            <nav class="menu-desktop">
+                <button onclick="mostrarPagina('home')">Início</button>
+                <button onclick="mostrarPagina('fotos')">Fotos</button>
+                <button onclick="mostrarPagina('antesdepois')">Antes e Depois</button>
+                <button onclick="mostrarPagina('spotify')">Spotify 🎵</button>
+                <button onclick="mostrarPagina('conversa')">1° Conversa</button>
+                <button onclick="mostrarPagina('quemsomos')">Quem Somos</button>
+                <button onclick="mostrarPagina('casa')">Nossa Casa 🏡</button>
+                <button onclick="mostrarPagina('memoria')">Jogo da Memória 💞</button>
+            </nav>
 
-        <nav class="menu-desktop">
-            <button onclick="mostrarPagina('home')">Início</button>
-            <button onclick="mostrarPagina('fotos')">Fotos</button>
-            <button onclick="mostrarPagina('antesdepois')">Antes e Depois</button>
-            <button onclick="mostrarPagina('spotify')">Spotify 🎵</button>
-            <button onclick="mostrarPagina('conversa')">1° Conversa</button>
-            <button onclick="mostrarPagina('quemsomos')">Quem Somos</button>
-            <button onclick="mostrarPagina('casa')">Nossa Casa 🏡</button>
-            <button onclick="mostrarPagina('memoria')">Jogo da Memória 💞</button>
-        </nav>
-
-        <!-- BOTÃO MOBILE -->
-
-        <button class="menu-mobile-btn" id="menuMobileBtn" aria-label="Abrir menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-
+            <!-- BOTÃO MENU MOBILE (ESTILO APPLE) -->
+            <button class="apple-menu-btn" id="menuMobileBtn" aria-label="Abrir menu">
+                <span class="apple-bar top"></span>
+                <span class="apple-bar bottom"></span>
+            </button>
+        </div>
     </header>
 
 
     <!-- =========================================
-         MENU MOBILE
+         MENU MOBILE ESTILO APPLE (FULLSCREEN OVERLAY)
     ========================================== -->
 
-    
-
-    <!-- BOTÃO MOBILE DE 3 BARRAS -->
-<button class="menu-mobile-btn" id="menuMobileBtn" aria-label="Abrir menu">
-    <div class="hamburger-bar"></div>
-    <div class="hamburger-bar"></div>
-    <div class="hamburger-bar"></div>
-</button>
-
-    <aside class="menu-mobile" id="menuMobile">
-
-        <div class="menu-mobile-topo">
-
-            <div>
-                <span>RAPHAEL & CAMILLY</span>
-                <small>Nosso cantinho ❤️</small>
-            </div>
-
-            <button class="menu-mobile-btn" id="menuMobileBtn" aria-label="Abrir menu">
-    <div class="hamburger-bar"></div>
-    <div class="hamburger-bar"></div>
-    <div class="hamburger-bar"></div>
-</button> 
-
-            <button id="fecharMenuMobile" aria-label="Fechar menu">
-                ×
+    <div class="apple-menu-overlay" id="menuMobileOverlay">
+        <nav class="apple-menu-nav">
+            <button class="apple-nav-item" onclick="mostrarPagina('home')">
+                <span>Início</span>
+                <i class="fa-solid fa-chevron-right"></i>
             </button>
 
-        </div>
-
-        <nav>
-
-            <button onclick="mostrarPagina('home')">
-                <span>⌂</span>
-                Início
+            <button class="apple-nav-item" onclick="mostrarPagina('fotos')">
+                <span>Fotos</span>
+                <i class="fa-solid fa-chevron-right"></i>
             </button>
 
-            <button onclick="mostrarPagina('fotos')">
-                <span>♡</span>
-                Fotos
+            <button class="apple-nav-item" onclick="mostrarPagina('antesdepois')">
+                <span>Antes e Depois</span>
+                <i class="fa-solid fa-chevron-right"></i>
             </button>
 
-            <button onclick="mostrarPagina('antesdepois')">
-                <span>∞</span>
-                Antes e Depois
+            <button class="apple-nav-item" onclick="mostrarPagina('spotify')">
+                <span>Spotify 🎵</span>
+                <i class="fa-solid fa-chevron-right"></i>
             </button>
 
-            <button onclick="mostrarPagina('spotify')">
-    <span>♫</span>
-    Spotify 🎵
-</button>
-
-            <button onclick="mostrarPagina('conversa')">
-                <span>♡</span>
-                1° Conversa
+            <button class="apple-nav-item" onclick="mostrarPagina('conversa')">
+                <span>1° Conversa</span>
+                <i class="fa-solid fa-chevron-right"></i>
             </button>
 
-            <button onclick="mostrarPagina('quemsomos')">
-                <span>♧</span>
-                Quem Somos
+            <button class="apple-nav-item" onclick="mostrarPagina('quemsomos')">
+                <span>Quem Somos</span>
+                <i class="fa-solid fa-chevron-right"></i>
             </button>
 
-            <button onclick="mostrarPagina('casa')">
-                <span>⌂</span>
-                Nossa Casa 🏡
+            <button class="apple-nav-item" onclick="mostrarPagina('casa')">
+                <span>Nossa Casa 🏡</span>
+                <i class="fa-solid fa-chevron-right"></i>
             </button>
 
-            <button onclick="mostrarPagina('memoria')">
-                <span>♡</span>
-                Jogo da Memória 💞
+            <button class="apple-nav-item" onclick="mostrarPagina('memoria')">
+                <span>Jogo da Memória 💞</span>
+                <i class="fa-solid fa-chevron-right"></i>
             </button>
-
         </nav>
 
-        <div class="menu-mobile-footer">
-            Feito com amor ❤️
+        <div class="apple-menu-footer">
+            <p>Feito com amor ❤️</p>
+            <small>Raphael & Camilly • Nosso cantinho</small>
         </div>
-
-    </aside>
+    </div>
 
 
     <!-- =========================================
@@ -150,7 +122,7 @@
         <p>
             Esse site é nosso cantinho especial.
             Um lugar onde guardamos nossas memórias,
-            sentimentos, músicas e momentos inesquecíveis.
+            sentimentos, músicas e sonhos.
             Cada detalhe aqui representa um pedaço da nossa história.
         </p>
 
@@ -296,71 +268,64 @@
     </section>
 
 
-    
     <!-- =========================================
-     PÁGINA SPOTIFY
-========================================== -->
+         PÁGINA SPOTIFY
+    ========================================== -->
 
-<section class="pagina" id="spotify">
+    <section class="pagina" id="spotify">
 
-    <h2 class="titulo">Nosso Spotify 🎧</h2>
+        <h2 class="titulo">Nosso Spotify 🎧</h2>
 
-    <div class="spotify-app-container">
-        
-        <!-- Player Principal -->
-        <div class="spotify-player-main">
-            <img src="image/foto2.jpg" alt="Capa" id="spCover" class="sp-cover-grande">
+        <div class="spotify-app-container">
             
-            <div class="sp-info-main">
-                <h3 id="spTitle">Na Linha do Tempo</h3>
-                <p id="spArtist">Raphael & Camilly</p>
+            <div class="spotify-player-main">
+                <img src="image/foto2.jpg" alt="Capa" id="spCover" class="sp-cover-grande">
+                
+                <div class="sp-info-main">
+                    <h3 id="spTitle">Na Linha do Tempo</h3>
+                    <p id="spArtist">Raphael & Camilly</p>
+                </div>
+
+                <button class="sp-like-main" onclick="curtirSpotify(this)">❤️</button>
             </div>
 
-            <button class="sp-like-main" onclick="curtirSpotify(this)">❤️</button>
-        </div>
+            <audio id="spAudio" src="music/musica1.mp3"></audio>
 
-        <audio id="spAudio" src="music/musica1.mp3"></audio>
-
-        <!-- Barra de Progresso -->
-        <div class="sp-progress-area" onclick="seekSpAudio(event)">
-            <div class="sp-progress-bar" id="spProgressBar"></div>
-        </div>
-        <div class="sp-time-area">
-            <span id="spCurrentTime">0:00</span>
-            <span id="spDurationTime">0:00</span>
-        </div>
-
-        <!-- Botões de Controle com ícones brancos do Font Awesome -->
-        <div class="sp-controls-main">
-            <button class="sp-ctrl-secundario" id="spShuffleBtn" onclick="toggleShuffle()" title="Aleatório">
-                <i class="fa-solid fa-shuffle"></i>
-            </button>
-            <button class="sp-ctrl-principal" onclick="mudarSpMusica('prev')" title="Anterior">
-                <i class="fa-solid fa-backward-step"></i>
-            </button>
-            <button class="sp-play-btn-redondo" onclick="toggleSpPlay()" id="spPlayBtn" title="Play/Pause">
-                <i class="fa-solid fa-play" id="spPlayIcon"></i>
-            </button>
-            <button class="sp-ctrl-principal" onclick="mudarSpMusica('next')" title="Próxima">
-                <i class="fa-solid fa-forward-step"></i>
-            </button>
-            <button class="sp-ctrl-secundario" id="spRepeatBtn" onclick="toggleRepeat()" title="Repetir">
-                <i class="fa-solid fa-repeat"></i>
-            </button>
-        </div>
-
-        
-        <!-- Lista de Músicas (Playlist) -->
-        <div class="sp-playlist">
-            <h4>Músicas do Casal 🎶</h4>
-            <div class="sp-track-list" id="spTrackList">
-                <!-- As músicas entram aqui automaticamente -->
+            <div class="sp-progress-area" onclick="seekSpAudio(event)">
+                <div class="sp-progress-bar" id="spProgressBar"></div>
             </div>
+            <div class="sp-time-area">
+                <span id="spCurrentTime">0:00</span>
+                <span id="spDurationTime">0:00</span>
+            </div>
+
+            <div class="sp-controls-main">
+                <button class="sp-ctrl-secundario" id="spShuffleBtn" onclick="toggleShuffle()" title="Aleatório">
+                    <i class="fa-solid fa-shuffle"></i>
+                </button>
+                <button class="sp-ctrl-principal" onclick="mudarSpMusica('prev')" title="Anterior">
+                    <i class="fa-solid fa-backward-step"></i>
+                </button>
+                <button class="sp-play-btn-redondo" onclick="toggleSpPlay()" id="spPlayBtn" title="Play/Pause">
+                    <i class="fa-solid fa-play" id="spPlayIcon"></i>
+                </button>
+                <button class="sp-ctrl-principal" onclick="mudarSpMusica('next')" title="Próxima">
+                    <i class="fa-solid fa-forward-step"></i>
+                </button>
+                <button class="sp-ctrl-secundario" id="spRepeatBtn" onclick="toggleRepeat()" title="Repetir">
+                    <i class="fa-solid fa-repeat"></i>
+                </button>
+            </div>
+
+            <div class="sp-playlist">
+                <h4>Músicas do Casal 🎶</h4>
+                <div class="sp-track-list" id="spTrackList">
+                </div>
+            </div>
+
         </div>
 
-    </div>
-
-</section>
+    </section>
 
     <!-- =========================================
          ANTES E DEPOIS
@@ -703,8 +668,6 @@
 
         </div>
 
-        
-
 
         <!-- DETALHES -->
 
@@ -783,7 +746,7 @@
 
 
     <!-- PÁGINA DO JOGO DA MEMÓRIA -->
-    <section class="pagina memoria-pagina ativa" id="memoria">
+    <section class="pagina memoria-pagina" id="memoria">
 
         <div class="memoria-cabecalho">
             <span class="memoria-etiqueta">RAPHAEL & CAMILLY</span>
