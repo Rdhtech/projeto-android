@@ -84,6 +84,7 @@ body.menu-aberto {
 }
 
 .menu-desktop button {
+    font-family: 'Poppins', sans-serif;
     background: none;
     border: none;
     color: rgba(245, 245, 247, 0.8);
