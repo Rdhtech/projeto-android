@@ -46,6 +46,7 @@
                 <button onclick="mostrarPagina('quemsomos')">Quem Somos</button>
                 <button onclick="mostrarPagina('casa')">Nossa Casa 🏡</button>
                 <button onclick="mostrarPagina('memoria')">Jogo da Memória 💞</button>
+                <button onclick="mostrarPagina('capsula')">Cápsula do Tempo 💌</button>
             </nav>
 
             <!-- BOTÃO MENU MOBILE (ESTILO APPLE) -->
@@ -100,6 +101,11 @@
 
             <button class="apple-nav-item" onclick="mostrarPagina('memoria')">
                 <span>Jogo da Memória 💞</span>
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <button class="apple-nav-item" onclick="mostrarPagina('capsula')">
+                <span>Cápsula do Tempo 💌</span>
                 <i class="fa-solid fa-chevron-right"></i>
             </button>
         </nav>
@@ -769,7 +775,7 @@
 
                 <div>
                     <span>Pares encontrados</span>
-                    <strong id="memoriaPares">0 / 21</strong>
+                    <strong id="memoriaPares">0 / 10</strong>
                 </div>
 
                 <div>
@@ -784,9 +790,9 @@
                 </label>
 
                 <select id="memoriaDificuldade">
-                    <option value="21" selected>Todas as fotos (21 pares)</option>
-                    <option value="12">12 pares</option>
+                    <option value="10" selected>Todas as fotos (10 pares)</option>
                     <option value="8">8 pares</option>
+                    <option value="6">6 pares</option>
                 </select>
 
                 <button type="button" id="memoriaReiniciar">
@@ -822,6 +828,108 @@
 
 
     <!-- =========================================
+         CÁPSULA DO TEMPO
+    ========================================== -->
+    <section class="pagina capsula-pagina" id="capsula">
+        <div class="capsula-cabecalho">
+            <span class="capsula-etiqueta">RAPHAEL & CAMILLY · PARA O NOSSO FUTURO</span>
+            <div class="capsula-selo" aria-hidden="true">💌</div>
+            <h2 class="titulo">Cápsula do Tempo</h2>
+            <p class="capsula-intro">
+                Algumas palavras merecem esperar pelo momento certo.
+                Escrevam algo hoje para sentir de novo amanhã ou no futuro e deixem o tempo guardar o resto. ❤️
+            </p>
+        </div>
+
+        <div class="capsula-aviso" role="note">
+            <i class="fa-solid fa-lock"></i>
+            <div>
+                <strong>Uma mensagem para o futuro</strong>
+                <p>Escolha uma data, escreva com carinho e confirme antes de guardar. A mensagem só deve ser lida quando chegar o dia escolhido.</p>
+            </div>
+        </div>
+
+        <div class="capsula-acoes" id="capsulaInicio">
+            <button type="button" class="capsula-botao principal" id="capsulaAbrirEscrita">
+                <i class="fa-solid fa-pen-nib"></i>
+                Quero inserir um texto
+            </button>
+            <button type="button" class="capsula-botao secundario" id="capsulaAbrirLista">
+                <i class="fa-regular fa-envelope-open"></i>
+                Quero ver um texto
+            </button>
+        </div>
+
+        <section class="capsula-painel" id="capsulaEditor" hidden>
+            <div class="capsula-painel-topo">
+                <span class="capsula-mini-etiqueta">UMA CARTA PARA O FUTURO</span>
+                <h3>Escreva o que está no seu coração ❤️</h3>
+                <p>Antes de selar, você poderá revisar e corrigir sua mensagem.</p>
+            </div>
+            <form id="capsulaFormulario">
+                <label for="capsulaTitulo">Nome da carta <span>(opcional)</span></label>
+                <input id="capsulaTitulo" name="titulo" maxlength="70" placeholder="Ex.: Para nós daqui a um ano">
+
+                <label for="capsulaTexto">Sua mensagem</label>
+                <textarea id="capsulaTexto" name="texto" rows="7" maxlength="10000" required placeholder="Escreva aqui tudo aquilo que você quer que o seu amor leia no futuro..."></textarea>
+                <div class="capsula-contagem"><span id="capsulaContagem">0</span>/10000 caracteres</div>
+
+                <label for="capsulaData">Quando essa carta poderá ser aberta?</label>
+                <input id="capsulaData" name="data" type="date" required>
+
+                <div class="capsula-form-acoes">
+                    <button type="button" class="capsula-botao secundario" id="capsulaCancelarEscrita">Cancelar</button>
+                    <button type="submit" class="capsula-botao principal"><i class="fa-solid fa-arrow-right"></i> Revisar carta</button>
+                </div>
+                <p class="capsula-microaviso"><i class="fa-solid fa-heart"></i> Você verá uma confirmação antes de guardar.</p>
+            </form>
+        </section>
+
+        <section class="capsula-painel" id="capsulaRevisao" hidden>
+            <div class="capsula-painel-topo">
+                <span class="capsula-mini-etiqueta">ANTES DE SELAR</span>
+                <h3>Leia mais uma vez 💗</h3>
+                <p>Se quiser mudar alguma coisa, volte para corrigir. Depois de confirmar, a carta fica guardada neste navegador.</p>
+            </div>
+            <article class="capsula-carta-preview">
+                <div class="capsula-carta-icone">✉</div>
+                <span class="capsula-preview-data" id="capsulaPreviewData"></span>
+                <h4 id="capsulaPreviewTitulo"></h4>
+                <p id="capsulaPreviewTexto"></p>
+            </article>
+            <div class="capsula-form-acoes">
+                <button type="button" class="capsula-botao secundario" id="capsulaCorrigir"><i class="fa-solid fa-pen"></i> Corrigir texto</button>
+                <button type="button" class="capsula-botao principal" id="capsulaConfirmar"><i class="fa-solid fa-lock"></i> Sim, quero selar</button>
+            </div>
+        </section>
+
+        <section class="capsula-painel" id="capsulaLista" hidden>
+            <div class="capsula-painel-topo">
+                <span class="capsula-mini-etiqueta">AS NOSSAS CARTAS</span>
+                <h3>Mensagens guardadas 💌</h3>
+                <p>As cartas futuras aparecem seladas. Quando chegar a data, você poderá abrir e ler.</p>
+            </div>
+            <div class="capsula-lista" id="capsulaCartasLista"></div>
+            <button type="button" class="capsula-botao secundario capsula-voltar" id="capsulaVoltarInicio">
+                <i class="fa-solid fa-arrow-left"></i> Voltar
+            </button>
+        </section>
+
+        <section class="capsula-painel capsula-leitura" id="capsulaLeitura" hidden>
+            <button type="button" class="capsula-voltar-texto" id="capsulaVoltarLista"><i class="fa-solid fa-arrow-left"></i> Voltar às cartas</button>
+            <div class="capsula-carta-preview aberta">
+                <div class="capsula-carta-icone">💌</div>
+                <span class="capsula-preview-data" id="capsulaLeituraData"></span>
+                <h3 id="capsulaLeituraTitulo"></h3>
+                <p id="capsulaLeituraTexto"></p>
+                <div class="capsula-assinatura">Com amor, Raphael & Camilly ❤️</div>
+            </div>
+        </section>
+
+        <p class="capsula-rodape"><i class="fa-solid fa-infinity"></i> Para lembrar hoje. Para reler no momento certo. Para sempre nós dois.</p>
+    </section>
+
+    <!-- =========================================
          FOOTER
     ========================================== -->
 
@@ -831,6 +939,7 @@
 
 
     <script src="javascript/script.js"></script>
+    <script src="javascript/capsula.js"></script>
 
 </body>
 
