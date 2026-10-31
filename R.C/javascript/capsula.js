@@ -7,7 +7,7 @@
 
     // URL base limpa (sem /rest/v1)
     const SUPABASE_URL = "https://gjtxfyjxsxutbacmhvuc.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_kUtf8biwpTBneuf1NnSKg_fNF7k..."; // <--- Certifica-te de que a tua Publishable key está aqui inteira
+    const SUPABASE_KEY = "sb_publishable_kUtf8biwpTBneuNf1NnSKg_fNF7k2mZ"; // <--- Certifica-te de que a tua Publishable key está aqui inteira
 
     let supabaseClient = null;
 
