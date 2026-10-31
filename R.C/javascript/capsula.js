@@ -1,11 +1,22 @@
 /* =========================================================
-   CÁPSULA DO TEMPO — interface local
-   Observação: esta versão salva no navegador. Não é armazenamento
-   seguro nem compartilhado entre dispositivos. Veja as instruções
-   que acompanham os arquivos antes de publicar como cápsula privada.
+   CÁPSULA DO TEMPO — SUPABASE CLIENT OFICIAL CORRIGIDO
+   Raphael & Camilly ❤️
 ========================================================= */
 (() => {
     "use strict";
+
+    // URL base limpa (sem /rest/v1)
+    const SUPABASE_URL = "https://gjtxfyjxsxutbacmhvuc.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_kUtf8biwpTBneuf1NnSKg_fNF7k..."; // <--- Certifica-te de que a tua Publishable key está aqui inteira
+
+    let supabaseClient = null;
+
+    function getSupabase() {
+        if (!supabaseClient && window.supabase) {
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        }
+        return supabaseClient;
+    }
 
     const $ = id => document.getElementById(id);
     const editor = $("capsulaEditor");
@@ -17,9 +28,9 @@
     const textInput = $("capsulaTexto");
     const dateInput = $("capsulaData");
     const count = $("capsulaContagem");
-    const STORAGE_KEY = "raphael-camilly-capsula-v1";
+    
     let pendingLetter = null;
-    let activeLetterId = null;
+    let currentLettersCache = [];
 
     const todayLocal = () => {
         const d = new Date();
@@ -29,23 +40,42 @@
 
     dateInput.min = todayLocal();
 
-    function getLetters() {
+    async function getLetters() {
         try {
-            const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-            return Array.isArray(data) ? data : [];
+            const client = getSupabase();
+            if (!client) return [];
+
+            const { data, error } = await client.rpc("get_capsule_letters");
+            if (error) throw error;
+            if (Array.isArray(data)) {
+                currentLettersCache = data;
+                return data;
+            }
+            return [];
         } catch (error) {
-            console.warn("Não foi possível ler as cartas salvas.", error);
+            console.error("Erro ao buscar cartas:", error);
             return [];
         }
     }
 
-    function saveLetters(letters) {
+    async function saveLetterToSupabase(letter, password) {
         try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(letters));
-            return true;
+            const client = getSupabase();
+            if (!client) return { success: false, error: "Supabase não inicializado." };
+
+            const { data, error } = await client.rpc("create_capsule_letter", {
+                p_title: letter.title,
+                p_author: "Raphael & Camilly",
+                p_message: letter.message,
+                p_opening_date: letter.date,
+                p_password: password
+            });
+
+            if (error) throw error;
+            return data;
         } catch (error) {
-            alert("Não foi possível guardar a carta neste navegador. Verifique o espaço disponível.");
-            return false;
+            console.error("Erro ao salvar carta:", error);
+            return { success: false, error: error.message || "Erro de ligação com o servidor." };
         }
     }
 
@@ -63,14 +93,15 @@
     }
 
     function formatDate(dateString) {
-        const parts = dateString.split("-").map(Number);
+        if (!dateString) return "";
+        const parts = dateString.split("T")[0].split("-").map(Number);
         return new Date(parts[0], parts[1] - 1, parts[2]).toLocaleDateString("pt-BR", {
             day: "2-digit", month: "long", year: "numeric"
         });
     }
 
     function escapeHTML(value) {
-        return String(value).replace(/[&<>"']/g, char => ({
+        return String(value || "").replace(/[&<>"']/g, char => ({
             "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
         })[char]);
     }
@@ -126,24 +157,21 @@
         textInput.focus();
     });
 
-    $("capsulaConfirmar").addEventListener("click", () => {
+    $("capsulaConfirmar").addEventListener("click", async () => {
         if (!pendingLetter) return;
-        const yes = window.confirm("Tem certeza de que deseja selar esta carta até " +
-            formatDate(pendingLetter.date) + "? Revise o texto antes de confirmar.");
-        if (!yes) return;
 
-        const letters = getLetters();
-        letters.push({
-            id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2),
-            title: pendingLetter.title,
-            message: pendingLetter.message,
-            date: pendingLetter.date,
-            createdAt: new Date().toISOString()
-        });
-        if (!saveLetters(letters)) return;
+        const senhaInformada = prompt("Para selar e guardar esta carta, digite a senha da cápsula:");
+        if (!senhaInformada) return;
+
+        const resultado = await saveLetterToSupabase(pendingLetter, senhaInformada);
+
+        if (!resultado || resultado.success === false) {
+            alert(resultado?.error || "Erro ao salvar a carta. Verifique a senha.");
+            return;
+        }
 
         clearForm();
-        alert("Carta guardada neste navegador. ❤️");
+        alert("Carta guardada com sucesso no servidor online! ❤️");
         renderLetters();
         showPanel("capsulaLista");
     });
@@ -159,18 +187,20 @@
         showPanel("capsulaLista");
     });
 
-    function renderLetters() {
+    async function renderLetters() {
         const list = $("capsulaCartasLista");
-        const letters = getLetters().sort((a, b) => a.date.localeCompare(b.date));
+        list.innerHTML = '<div class="capsula-vazio">Carregando cartas do servidor... 💌</div>';
+
+        const letters = await getLetters();
         list.innerHTML = "";
 
-        if (!letters.length) {
-            list.innerHTML = '<div class="capsula-vazio"><div style="font-size:28px;margin-bottom:10px">💌</div>Ainda não há cartas guardadas.<br>Que tal escrever a primeira lembrança para o futuro?</div>';
+        if (!letters || !letters.length) {
+            list.innerHTML = '<div class="capsula-vazio"><div style="font-size:28px;margin-bottom:10px">💌</div>Ainda não há cartas guardadas no servidor.<br>Que tal escrever a primeira lembrança para o futuro?</div>';
             return;
         }
 
         letters.forEach(letter => {
-            const isOpen = todayLocal() >= letter.date;
+            const isOpen = letter.is_unlocked;
             const button = document.createElement("button");
             button.type = "button";
             button.className = "capsula-item";
@@ -179,9 +209,10 @@
                 <span class="capsula-item-icone"><i class="fa-solid ${isOpen ? "fa-envelope-open" : "fa-lock"}"></i></span>
                 <span class="capsula-item-info">
                     <strong>${escapeHTML(letter.title || "Uma carta para o futuro")}</strong>
-                    <small>${isOpen ? "Disponível para abrir" : "Selada até " + escapeHTML(formatDate(letter.date))}</small>
+                    <small>${isOpen ? "Disponível para abrir" : escapeHTML(letter.message)}</small>
                 </span>
                 <span class="capsula-item-status">${isOpen ? "Abrir →" : "🔒 Selada"}</span>`;
+            
             if (isOpen) {
                 button.addEventListener("click", () => openLetter(letter.id));
             }
@@ -190,21 +221,19 @@
     }
 
     function openLetter(id) {
-        const letter = getLetters().find(item => item.id === id);
+        const letter = currentLettersCache.find(item => item.id === id);
         if (!letter) return;
-        if (todayLocal() < letter.date) {
+        
+        if (!letter.is_unlocked) {
             alert("Essa carta ainda está selada. ❤️");
             return;
         }
-        activeLetterId = id;
-        $("capsulaLeituraData").textContent = "Escrita em " +
-            new Date(letter.createdAt).toLocaleDateString("pt-BR") +
-            " · Aberta a partir de " + formatDate(letter.date);
+
+        $("capsulaLeituraData").textContent = "Aberta a partir de " + formatDate(letter.opening_date);
         $("capsulaLeituraTitulo").textContent = letter.title || "Uma carta para o futuro";
         $("capsulaLeituraTexto").textContent = letter.message;
         showPanel("capsulaLeitura");
     }
 
-    // Initialize state
     showPanel(null);
 })();
