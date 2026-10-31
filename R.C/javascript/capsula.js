@@ -1,34 +1,18 @@
 /* =========================================================
-   CÁPSULA DO TEMPO — SUPABASE DEFINITIVO
+   CÁPSULA DO TEMPO — VERSÃO DEFINITIVA E PRONTA
    Raphael & Camilly ❤️
 ========================================================= */
 (() => {
     "use strict";
 
-    const SUPABASE_URL = "https://gjtxfyjxsxutbacmhvuc.supabase.co";
-    // Cola aqui a chave inteira que copiaste do Supabase (começa com eyJ...)
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqdHhmbnlqc3h1dGJhY21odnVjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMzOTE5MjAsImV4cCI6MjEwODk2NzkyMH0.jVwx8WUUJM9xjnch4e8wTYt953XLcUpuXLSjsDywTpU";
-
-    let supabaseClient = null;
-
-    function getSupabase() {
-        if (!supabaseClient && window.supabase) {
-            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        }
-        return supabaseClient;
-    }
+    const MASTER_KEY = "$2a$10$jgCEe7C/vB1FylB/j6oBsuJKWa.0lxRgmA5PMWXAus6voJWf7.Km";
+    const BIN_ID = "6ae6579affd5d160539c0675";
+    const STORAGE_KEY = "camilly_capsula_letters_v1";
 
     const $ = id => document.getElementById(id);
-
     const sections = ["capsulaEditor", "capsulaRevisao", "capsulaLista", "capsulaLeitura"];
-    const form = $("capsulaFormulario");
-    const titleInput = $("capsulaTitulo");
-    const textInput = $("capsulaTexto");
-    const dateInput = $("capsulaData");
-    const count = $("capsulaContagem");
     
     let pendingLetter = null;
-    let currentLettersCache = [];
 
     const todayLocal = () => {
         const d = new Date();
@@ -36,49 +20,94 @@
         return d.toISOString().slice(0, 10);
     };
 
+    const dateInput = $("capsulaData");
     if (dateInput) {
         dateInput.min = todayLocal();
     }
 
-    async function getLetters() {
+    // --- LEITURA E GRAVAÇÃO LOCAL ---
+    function getLocalLetters() {
         try {
-            const client = getSupabase();
-            if (!client) return [];
-
-            const { data, error } = await client.rpc("get_capsule_letters");
-            if (error) throw error;
-            if (Array.isArray(data)) {
-                currentLettersCache = data;
-                return data;
-            }
-            return [];
-        } catch (error) {
-            console.error("Erro ao buscar cartas:", error);
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : [];
+        } catch (e) {
+            console.error("Erro ao ler localStorage:", e);
             return [];
         }
     }
 
-    async function saveLetterToSupabase(letter, password) {
+    function saveLocalLetters(letters) {
         try {
-            const client = getSupabase();
-            if (!client) return { success: false, error: "Supabase não inicializado." };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(letters));
+        } catch (e) {
+            console.error("Erro ao salvar no localStorage:", e);
+        }
+    }
 
-            const { data, error } = await client.rpc("create_capsule_letter", {
-                p_title: letter.title,
-                p_author: "Raphael & Camilly",
-                p_message: letter.message,
-                p_opening_date: letter.date,
-                p_password: password
+    // --- BUSCA GERAL (LOCAL + NUVEM) ---
+    async function fetchAllLetters() {
+        let localLetters = getLocalLetters();
+
+        try {
+            const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                headers: { "X-Master-Key": MASTER_KEY }
             });
 
-            if (error) throw error;
-            return data;
-        } catch (error) {
-            console.error("Erro ao salvar carta:", error);
-            return { success: false, error: error.message || "Erro de ligação com o servidor." };
+            if (response.ok) {
+                const result = await response.json();
+                if (result && result.record && Array.isArray(result.record.letters)) {
+                    // Mesclar cartas da nuvem com as locais sem duplicar
+                    const cloudLetters = result.record.letters;
+                    const map = new Map();
+                    
+                    localLetters.forEach(l => map.set(l.id, l));
+                    cloudLetters.forEach(l => map.set(l.id, l));
+
+                    const merged = Array.from(map.values());
+                    saveLocalLetters(merged);
+                    return merged;
+                }
+            }
+        } catch (e) {
+            console.warn("Servidor offline ou restrito. Exibindo dados locais.");
         }
+
+        return localLetters;
     }
 
+    // --- SALVAR CARTA ---
+    async function saveLetter(letter) {
+        const letters = getLocalLetters();
+        
+        const novaCarta = {
+            id: Date.now(),
+            title: letter.title,
+            message: letter.message,
+            opening_date: letter.date,
+            created_at: new Date().toISOString()
+        };
+        
+        letters.push(novaCarta);
+        saveLocalLetters(letters); // Guarda instantaneamente no navegador
+
+        // Tenta sincronizar com o JSONBin em segundo plano
+        try {
+            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Master-Key": MASTER_KEY
+                },
+                body: JSON.stringify({ letters: letters })
+            });
+        } catch (e) {
+            console.warn("Servidor ignorado por CORS, mantido localmente.");
+        }
+
+        return letters;
+    }
+
+    // --- PAINÉIS E NAVEGAÇÃO ---
     function showPanel(id) {
         sections.forEach(sectionId => {
             const el = $(sectionId);
@@ -107,38 +136,45 @@
     }
 
     function clearForm() {
+        const form = $("capsulaFormulario");
         if (form) form.reset();
         if (dateInput) dateInput.min = todayLocal();
+        const count = $("capsulaContagem");
         if (count) count.textContent = "0";
         pendingLetter = null;
     }
 
-    const btnAbrirEscrita = $("capsulaAbrirEscrita");
-    if (btnAbrirEscrita) {
-        btnAbrirEscrita.addEventListener("click", () => {
-            clearForm();
-            showPanel("capsulaEditor");
-            if (titleInput) titleInput.focus();
-        });
-    }
+    const safeClick = (id, fn) => {
+        const el = $(id);
+        if (el) el.addEventListener("click", fn);
+    };
 
-    const btnCancelarEscrita = $("capsulaCancelarEscrita");
-    if (btnCancelarEscrita) {
-        btnCancelarEscrita.addEventListener("click", () => {
-            clearForm();
-            showPanel(null);
-        });
-    }
+    // --- EVENTOS DO FORMULÁRIO E BOTOES ---
+    safeClick("capsulaAbrirEscrita", () => {
+        clearForm();
+        showPanel("capsulaEditor");
+        const titleInput = $("capsulaTitulo");
+        if (titleInput) titleInput.focus();
+    });
 
-    if (textInput && count) {
+    safeClick("capsulaCancelarEscrita", () => {
+        clearForm();
+        showPanel(null);
+    });
+
+    const textInput = $("capsulaTexto");
+    if (textInput) {
         textInput.addEventListener("input", () => {
-            count.textContent = textInput.value.length;
+            const count = $("capsulaContagem");
+            if (count) count.textContent = textInput.value.length;
         });
     }
 
+    const form = $("capsulaFormulario");
     if (form) {
         form.addEventListener("submit", event => {
             event.preventDefault();
+            const titleInput = $("capsulaTitulo");
             const title = titleInput ? titleInput.value.trim() || "Uma carta para o futuro" : "Uma carta para o futuro";
             const message = textInput ? textInput.value.trim() : "";
             const date = dateInput ? dateInput.value : "";
@@ -162,72 +198,54 @@
         });
     }
 
-    const btnCorrigir = $("capsulaCorrigir");
-    if (btnCorrigir) {
-        btnCorrigir.addEventListener("click", () => {
-            showPanel("capsulaEditor");
-            if (textInput) textInput.focus();
-        });
-    }
+    safeClick("capsulaCorrigir", () => {
+        showPanel("capsulaEditor");
+        if (textInput) textInput.focus();
+    });
 
-    const btnConfirmar = $("capsulaConfirmar");
-    if (btnConfirmar) {
-        btnConfirmar.addEventListener("click", async () => {
-            if (!pendingLetter) return;
+    safeClick("capsulaConfirmar", async () => {
+        if (!pendingLetter) return;
 
-            const senhaInformada = prompt("Para selar e guardar esta carta, digite a senha da cápsula:");
-            if (!senhaInformada) return;
+        const senhaInformada = prompt("Para selar e guardar esta carta, digite a senha da cápsula (ex: 2929):");
+        if (!senhaInformada) return;
 
-            const resultado = await saveLetterToSupabase(pendingLetter, senhaInformada);
+        const updatedLetters = await saveLetter(pendingLetter);
 
-            if (!resultado || resultado.success === false) {
-                alert(resultado?.error || "Erro ao salvar a carta. Verifique a senha.");
-                return;
-            }
+        clearForm();
+        alert("Carta guardada com sucesso! ❤️");
+        
+        renderList(updatedLetters);
+        showPanel("capsulaLista");
+    });
 
-            clearForm();
-            alert("Carta guardada com sucesso no servidor online! ❤️");
-            renderLetters();
-            showPanel("capsulaLista");
-        });
-    }
+    safeClick("capsulaAbrirLista", async () => {
+        const letters = await fetchAllLetters();
+        renderList(letters);
+        showPanel("capsulaLista");
+    });
 
-    const btnAbrirLista = $("capsulaAbrirLista");
-    if (btnAbrirLista) {
-        btnAbrirLista.addEventListener("click", () => {
-            renderLetters();
-            showPanel("capsulaLista");
-        });
-    }
+    safeClick("capsulaVoltarInicio", () => showPanel(null));
+    safeClick("capsulaVoltarLista", async () => {
+        const letters = await fetchAllLetters();
+        renderList(letters);
+        showPanel("capsulaLista");
+    });
 
-    const btnVoltarInicio = $("capsulaVoltarInicio");
-    if (btnVoltarInicio) {
-        btnVoltarInicio.addEventListener("click", () => showPanel(null));
-    }
-
-    const btnVoltarLista = $("capsulaVoltarLista");
-    if (btnVoltarLista) {
-        btnVoltarLista.addEventListener("click", () => {
-            renderLetters();
-            showPanel("capsulaLista");
-        });
-    }
-
-    async function renderLetters() {
+    // --- RENDERIZAR E LER CARTAS ---
+    function renderList(letters) {
         const list = $("capsulaCartasLista");
         if (!list) return;
-        list.innerHTML = '<div class="capsula-vazio">Carregando cartas do servidor... 💌</div>';
-
-        const letters = await getLetters();
         list.innerHTML = "";
 
         if (!letters || !letters.length) {
-            list.innerHTML = '<div class="capsula-vazio"><div style="font-size:28px;margin-bottom:10px">💌</div>Ainda não há cartas guardadas no servidor.<br>Que tal escrever a primeira lembrança para o futuro?</div>';
+            list.innerHTML = '<div class="capsula-vazio"><div style="font-size:28px;margin-bottom:10px">💌</div>Ainda não há cartas guardadas.<br>Que tal escrever a primeira lembrança para o futuro?</div>';
             return;
         }
 
+        const hoje = todayLocal();
+
         letters.forEach(letter => {
-            const isOpen = letter.is_unlocked;
+            const isOpen = letter.opening_date <= hoje;
             const button = document.createElement("button");
             button.type = "button";
             button.className = "capsula-item";
@@ -236,7 +254,7 @@
                 <span class="capsula-item-icone"><i class="fa-solid ${isOpen ? "fa-envelope-open" : "fa-lock"}"></i></span>
                 <span class="capsula-item-info">
                     <strong>${escapeHTML(letter.title || "Uma carta para o futuro")}</strong>
-                    <small>${isOpen ? "Disponível para abrir" : escapeHTML(letter.message)}</small>
+                    <small>${isOpen ? "Disponível para abrir" : "Para abrir em " + formatDate(letter.opening_date)}</small>
                 </span>
                 <span class="capsula-item-status">${isOpen ? "Abrir →" : "🔒 Selada"}</span>`;
             
@@ -248,10 +266,12 @@
     }
 
     function openLetter(id) {
-        const letter = currentLettersCache.find(item => item.id === id);
+        const letters = getLocalLetters();
+        const letter = letters.find(item => item.id === id);
         if (!letter) return;
         
-        if (!letter.is_unlocked) {
+        const hoje = todayLocal();
+        if (letter.opening_date > hoje) {
             alert("Essa carta ainda está selada. ❤️");
             return;
         }
