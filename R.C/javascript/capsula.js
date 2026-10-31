@@ -1,18 +1,18 @@
 /* =========================================================
-   CÁPSULA DO TEMPO — VERSÃO DEFINITIVA E PRONTA
+   CÁPSULA DO TEMPO — NUVEM PÚBLICA (NPOINT.IO)
    Raphael & Camilly ❤️
 ========================================================= */
 (() => {
     "use strict";
 
-    const MASTER_KEY = "$2a$10$jgCEe7C/vB1FylB/j6oBsuJKWa.0lxRgmA5PMWXAus6voJWf7.Km";
-    const BIN_ID = "6ae6579affd5d160539c0675";
-    const STORAGE_KEY = "camilly_capsula_letters_v1";
+    const NPOINT_BIN_ID = "7517a163ea271d4378cf"; 
+    const API_URL = `https://api.npoint.io/${NPOINT_BIN_ID}`;
 
     const $ = id => document.getElementById(id);
     const sections = ["capsulaEditor", "capsulaRevisao", "capsulaLista", "capsulaLeitura"];
     
     let pendingLetter = null;
+    let cachedLetters = [];
 
     const todayLocal = () => {
         const d = new Date();
@@ -25,89 +25,58 @@
         dateInput.min = todayLocal();
     }
 
-    // --- LEITURA E GRAVAÇÃO LOCAL ---
-    function getLocalLetters() {
+    // --- BUSCAR CARTAS NA NUVEM ---
+    async function fetchCloudLetters() {
         try {
-            const data = localStorage.getItem(STORAGE_KEY);
-            return data ? JSON.parse(data) : [];
-        } catch (e) {
-            console.error("Erro ao ler localStorage:", e);
-            return [];
-        }
-    }
-
-    function saveLocalLetters(letters) {
-        try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(letters));
-        } catch (e) {
-            console.error("Erro ao salvar no localStorage:", e);
-        }
-    }
-
-    // --- BUSCA GERAL (LOCAL + NUVEM) ---
-    async function fetchAllLetters() {
-        let localLetters = getLocalLetters();
-
-        try {
-            const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-                headers: { "X-Master-Key": MASTER_KEY }
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                if (result && result.record && Array.isArray(result.record.letters)) {
-                    // Mesclar cartas da nuvem com as locais sem duplicar
-                    const cloudLetters = result.record.letters;
-                    const map = new Map();
-                    
-                    localLetters.forEach(l => map.set(l.id, l));
-                    cloudLetters.forEach(l => map.set(l.id, l));
-
-                    const merged = Array.from(map.values());
-                    saveLocalLetters(merged);
-                    return merged;
-                }
+            const response = await fetch(API_URL);
+            if (!response.ok) throw new Error("Erro ao carregar dados da nuvem.");
+            
+            const data = await response.json();
+            if (data && Array.isArray(data.letters)) {
+                cachedLetters = data.letters;
+                return data.letters;
             }
-        } catch (e) {
-            console.warn("Servidor offline ou restrito. Exibindo dados locais.");
+            return [];
+        } catch (error) {
+            console.error("Erro na busca online:", error);
+            return cachedLetters || [];
         }
-
-        return localLetters;
     }
 
-    // --- SALVAR CARTA ---
-    async function saveLetter(letter) {
-        const letters = getLocalLetters();
-        
-        const novaCarta = {
-            id: Date.now(),
-            title: letter.title,
-            message: letter.message,
-            opening_date: letter.date,
-            created_at: new Date().toISOString()
-        };
-        
-        letters.push(novaCarta);
-        saveLocalLetters(letters); // Guarda instantaneamente no navegador
-
-        // Tenta sincronizar com o JSONBin em segundo plano
+    // --- SALVAR CARTA NA NUVEM PARA TODOS VEREM ---
+    async function saveLetterToCloud(letter) {
         try {
-            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-Master-Key": MASTER_KEY
-                },
-                body: JSON.stringify({ letters: letters })
-            });
-        } catch (e) {
-            console.warn("Servidor ignorado por CORS, mantido localmente.");
-        }
+            const currentLetters = await fetchCloudLetters();
+            
+            const novaCarta = {
+                id: Date.now(),
+                title: letter.title,
+                message: letter.message,
+                opening_date: letter.date,
+                created_at: new Date().toISOString()
+            };
+            
+            currentLetters.push(novaCarta);
 
-        return letters;
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ letters: currentLetters })
+            });
+
+            if (!response.ok) throw new Error("Não foi possível salvar na nuvem.");
+
+            cachedLetters = currentLetters;
+            return { success: true };
+        } catch (error) {
+            console.error("Erro ao salvar:", error);
+            return { success: false, error: "Falha na conexão com o servidor da cápsula." };
+        }
     }
 
-    // --- PAINÉIS E NAVEGAÇÃO ---
+    // --- CONTROLE DE TELAS ---
     function showPanel(id) {
         sections.forEach(sectionId => {
             const el = $(sectionId);
@@ -149,7 +118,7 @@
         if (el) el.addEventListener("click", fn);
     };
 
-    // --- EVENTOS DO FORMULÁRIO E BOTOES ---
+    // --- NAVEGAÇÃO E FORMULÁRIO ---
     safeClick("capsulaAbrirEscrita", () => {
         clearForm();
         showPanel("capsulaEditor");
@@ -209,36 +178,41 @@
         const senhaInformada = prompt("Para selar e guardar esta carta, digite a senha da cápsula (ex: 2929):");
         if (!senhaInformada) return;
 
-        const updatedLetters = await saveLetter(pendingLetter);
+        const resultado = await saveLetterToCloud(pendingLetter);
+
+        if (!resultado || !resultado.success) {
+            alert(resultado?.error || "Erro ao salvar a carta na nuvem.");
+            return;
+        }
 
         clearForm();
-        alert("Carta guardada com sucesso! ❤️");
-        
-        renderList(updatedLetters);
+        alert("Carta guardada com sucesso na nuvem! ❤️");
+        await renderLetters();
         showPanel("capsulaLista");
     });
 
     safeClick("capsulaAbrirLista", async () => {
-        const letters = await fetchAllLetters();
-        renderList(letters);
+        await renderLetters();
         showPanel("capsulaLista");
     });
 
     safeClick("capsulaVoltarInicio", () => showPanel(null));
     safeClick("capsulaVoltarLista", async () => {
-        const letters = await fetchAllLetters();
-        renderList(letters);
+        await renderLetters();
         showPanel("capsulaLista");
     });
 
-    // --- RENDERIZAR E LER CARTAS ---
-    function renderList(letters) {
+    // --- EXIBIÇÃO E LEITURA DE CARTAS ---
+    async function renderLetters() {
         const list = $("capsulaCartasLista");
         if (!list) return;
+        list.innerHTML = '<div class="capsula-vazio">Buscando cartas na nuvem... 💌</div>';
+
+        const letters = await fetchCloudLetters();
         list.innerHTML = "";
 
         if (!letters || !letters.length) {
-            list.innerHTML = '<div class="capsula-vazio"><div style="font-size:28px;margin-bottom:10px">💌</div>Ainda não há cartas guardadas.<br>Que tal escrever a primeira lembrança para o futuro?</div>';
+            list.innerHTML = '<div class="capsula-vazio"><div style="font-size:28px;margin-bottom:10px">💌</div>Ainda não há cartas guardadas na nuvem.<br>Que tal escrever a primeira lembrança para o futuro?</div>';
             return;
         }
 
@@ -266,8 +240,7 @@
     }
 
     function openLetter(id) {
-        const letters = getLocalLetters();
-        const letter = letters.find(item => item.id === id);
+        const letter = cachedLetters.find(item => item.id === id);
         if (!letter) return;
         
         const hoje = todayLocal();
