@@ -1,13 +1,13 @@
 /* =========================================================
-   CÁPSULA DO TEMPO — SUPABASE CLIENT OFICIAL CORRIGIDO
+   CÁPSULA DO TEMPO — SUPABASE DEFINITIVO
    Raphael & Camilly ❤️
 ========================================================= */
 (() => {
     "use strict";
 
-    // URL base limpa (sem /rest/v1)
     const SUPABASE_URL = "https://gjtxfyjxsxutbacmhvuc.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_kUtf8biwpTBneuNf1NnSKg_fNF7k2mZ"; // <--- Certifica-te de que a tua Publishable key está aqui inteira
+    // Cola aqui a chave inteira que copiaste do Supabase (começa com eyJ...)
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdqdHhmbnlqc3h1dGJhY21odnVjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMzOTE5MjAsImV4cCI6MjEwODk2NzkyMH0.jVwx8WUUJM9xjnch4e8wTYt953XLcUpuXLSjsDywTpU";
 
     let supabaseClient = null;
 
@@ -19,8 +19,6 @@
     }
 
     const $ = id => document.getElementById(id);
-    const editor = $("capsulaEditor");
-    if (!editor) return;
 
     const sections = ["capsulaEditor", "capsulaRevisao", "capsulaLista", "capsulaLeitura"];
     const form = $("capsulaFormulario");
@@ -38,7 +36,9 @@
         return d.toISOString().slice(0, 10);
     };
 
-    dateInput.min = todayLocal();
+    if (dateInput) {
+        dateInput.min = todayLocal();
+    }
 
     async function getLetters() {
         try {
@@ -107,88 +107,115 @@
     }
 
     function clearForm() {
-        form.reset();
-        dateInput.min = todayLocal();
-        count.textContent = "0";
+        if (form) form.reset();
+        if (dateInput) dateInput.min = todayLocal();
+        if (count) count.textContent = "0";
         pendingLetter = null;
     }
 
-    $("capsulaAbrirEscrita").addEventListener("click", () => {
-        clearForm();
-        showPanel("capsulaEditor");
-        titleInput.focus();
-    });
+    const btnAbrirEscrita = $("capsulaAbrirEscrita");
+    if (btnAbrirEscrita) {
+        btnAbrirEscrita.addEventListener("click", () => {
+            clearForm();
+            showPanel("capsulaEditor");
+            if (titleInput) titleInput.focus();
+        });
+    }
 
-    $("capsulaCancelarEscrita").addEventListener("click", () => {
-        clearForm();
-        showPanel(null);
-    });
+    const btnCancelarEscrita = $("capsulaCancelarEscrita");
+    if (btnCancelarEscrita) {
+        btnCancelarEscrita.addEventListener("click", () => {
+            clearForm();
+            showPanel(null);
+        });
+    }
 
-    textInput.addEventListener("input", () => {
-        count.textContent = textInput.value.length;
-    });
+    if (textInput && count) {
+        textInput.addEventListener("input", () => {
+            count.textContent = textInput.value.length;
+        });
+    }
 
-    form.addEventListener("submit", event => {
-        event.preventDefault();
-        const title = titleInput.value.trim() || "Uma carta para o futuro";
-        const message = textInput.value.trim();
-        const date = dateInput.value;
+    if (form) {
+        form.addEventListener("submit", event => {
+            event.preventDefault();
+            const title = titleInput ? titleInput.value.trim() || "Uma carta para o futuro" : "Uma carta para o futuro";
+            const message = textInput ? textInput.value.trim() : "";
+            const date = dateInput ? dateInput.value : "";
 
-        if (!message) {
-            alert("Escreva sua mensagem antes de continuar. ❤️");
-            textInput.focus();
-            return;
-        }
-        if (!date || date < todayLocal()) {
-            alert("Escolha hoje ou uma data futura para abrir a carta.");
-            dateInput.focus();
-            return;
-        }
+            if (!message) {
+                alert("Escreva sua mensagem antes de continuar. ❤️");
+                if (textInput) textInput.focus();
+                return;
+            }
+            if (!date || date < todayLocal()) {
+                alert("Escolha hoje ou uma data futura para abrir a carta.");
+                if (dateInput) dateInput.focus();
+                return;
+            }
 
-        pendingLetter = { title, message, date };
-        $("capsulaPreviewTitulo").textContent = title;
-        $("capsulaPreviewData").textContent = "Para abrir em " + formatDate(date);
-        $("capsulaPreviewTexto").textContent = message;
-        showPanel("capsulaRevisao");
-    });
+            pendingLetter = { title, message, date };
+            if ($("capsulaPreviewTitulo")) $("capsulaPreviewTitulo").textContent = title;
+            if ($("capsulaPreviewData")) $("capsulaPreviewData").textContent = "Para abrir em " + formatDate(date);
+            if ($("capsulaPreviewTexto")) $("capsulaPreviewTexto").textContent = message;
+            showPanel("capsulaRevisao");
+        });
+    }
 
-    $("capsulaCorrigir").addEventListener("click", () => {
-        showPanel("capsulaEditor");
-        textInput.focus();
-    });
+    const btnCorrigir = $("capsulaCorrigir");
+    if (btnCorrigir) {
+        btnCorrigir.addEventListener("click", () => {
+            showPanel("capsulaEditor");
+            if (textInput) textInput.focus();
+        });
+    }
 
-    $("capsulaConfirmar").addEventListener("click", async () => {
-        if (!pendingLetter) return;
+    const btnConfirmar = $("capsulaConfirmar");
+    if (btnConfirmar) {
+        btnConfirmar.addEventListener("click", async () => {
+            if (!pendingLetter) return;
 
-        const senhaInformada = prompt("Para selar e guardar esta carta, digite a senha da cápsula:");
-        if (!senhaInformada) return;
+            const senhaInformada = prompt("Para selar e guardar esta carta, digite a senha da cápsula:");
+            if (!senhaInformada) return;
 
-        const resultado = await saveLetterToSupabase(pendingLetter, senhaInformada);
+            const resultado = await saveLetterToSupabase(pendingLetter, senhaInformada);
 
-        if (!resultado || resultado.success === false) {
-            alert(resultado?.error || "Erro ao salvar a carta. Verifique a senha.");
-            return;
-        }
+            if (!resultado || resultado.success === false) {
+                alert(resultado?.error || "Erro ao salvar a carta. Verifique a senha.");
+                return;
+            }
 
-        clearForm();
-        alert("Carta guardada com sucesso no servidor online! ❤️");
-        renderLetters();
-        showPanel("capsulaLista");
-    });
+            clearForm();
+            alert("Carta guardada com sucesso no servidor online! ❤️");
+            renderLetters();
+            showPanel("capsulaLista");
+        });
+    }
 
-    $("capsulaAbrirLista").addEventListener("click", () => {
-        renderLetters();
-        showPanel("capsulaLista");
-    });
+    const btnAbrirLista = $("capsulaAbrirLista");
+    if (btnAbrirLista) {
+        btnAbrirLista.addEventListener("click", () => {
+            renderLetters();
+            showPanel("capsulaLista");
+        });
+    }
 
-    $("capsulaVoltarInicio").addEventListener("click", () => showPanel(null));
-    $("capsulaVoltarLista").addEventListener("click", () => {
-        renderLetters();
-        showPanel("capsulaLista");
-    });
+    const btnVoltarInicio = $("capsulaVoltarInicio");
+    if (btnVoltarInicio) {
+        btnVoltarInicio.addEventListener("click", () => showPanel(null));
+    }
+
+    const btnVoltarLista = $("capsulaVoltarLista");
+    if (btnVoltarLista) {
+        btnVoltarLista.addEventListener("click", () => {
+            renderLetters();
+            showPanel("capsulaLista");
+        });
+    }
 
     async function renderLetters() {
         const list = $("capsulaCartasLista");
+        if (!list) return;
         list.innerHTML = '<div class="capsula-vazio">Carregando cartas do servidor... 💌</div>';
 
         const letters = await getLetters();
@@ -229,9 +256,9 @@
             return;
         }
 
-        $("capsulaLeituraData").textContent = "Aberta a partir de " + formatDate(letter.opening_date);
-        $("capsulaLeituraTitulo").textContent = letter.title || "Uma carta para o futuro";
-        $("capsulaLeituraTexto").textContent = letter.message;
+        if ($("capsulaLeituraData")) $("capsulaLeituraData").textContent = "Aberta a partir de " + formatDate(letter.opening_date);
+        if ($("capsulaLeituraTitulo")) $("capsulaLeituraTitulo").textContent = letter.title || "Uma carta para o futuro";
+        if ($("capsulaLeituraTexto")) $("capsulaLeituraTexto").textContent = letter.message;
         showPanel("capsulaLeitura");
     }
 
